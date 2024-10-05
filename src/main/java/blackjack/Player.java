@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private List<Card> hand;
+    private final List<Card> hand;
 
     public Player() {
         hand = new ArrayList<>();
@@ -22,47 +22,23 @@ public class Player {
         hand.clear();
     }
 
-    // További játékos logika
-
     public int getHandValue() {
         int value = 0;
         int aceCount = 0;
 
         for (Card card : hand) {
             switch (card.getRank()) {
-                case "2":
-                    value += 2;
-                    break;
-                case "3":
-                    value += 3;
-                    break;
-                case "4":
-                    value += 4;
-                    break;
-                case "5":
-                    value += 5;
-                    break;
-                case "6":
-                    value += 6;
-                    break;
-                case "7":
-                    value += 7;
-                    break;
-                case "8":
-                    value += 8;
-                    break;
-                case "9":
-                    value += 9;
-                    break;
-                case "10":
-                case "jack":
-                case "queen":
-                case "king":
-                    value += 10;
-                    break;
-                case "ace":
-                    aceCount++;
-                    break;
+                case "2" -> value += 2;
+                case "3" -> value += 3;
+                case "4" -> value += 4;
+                case "5" -> value += 5;
+                case "6" -> value += 6;
+                case "7" -> value += 7;
+                case "8" -> value += 8;
+                case "9" -> value += 9;
+                case "10", "jack", "queen", "king" -> value += 10;
+                case "ace" -> aceCount++;
+                default -> throw new IllegalArgumentException("Unexpected card rank: " + card.getRank());
             }
         }
 
@@ -93,11 +69,6 @@ public class Player {
         hand.clear();
     }
 
-
-    public boolean isFiveCardTrick() {
-        return hand.size() == 5 && getHandValue() <= 21;
-    }
-
     public boolean isPush(Player other) {
         return getHandValue() == other.getHandValue();
     }
@@ -109,8 +80,4 @@ public class Player {
     public boolean hasLesserHandThan(Player other) {
         return getHandValue() < other.getHandValue();
     }
-
-
-
-
 }

@@ -39,6 +39,9 @@ public class Game {
     public void playerDrawCard() {
         player.addCard(deck.draw());
         ui.updateUI();
+        if (player.isBusted()) {
+            endGame();
+        }
     }
 
     public void dealerDrawCard() {
@@ -56,11 +59,11 @@ public class Game {
         }
 
         if (dealer.isBusted() || player.hasBetterHandThan(dealer)) {
-            System.out.println("Player wins!");
+            ui.showEndGameMessage("Player wins!");
         } else if (player.isBusted() || dealer.hasBetterHandThan(player)) {
-            System.out.println("Dealer wins!");
+            ui.showEndGameMessage("Dealer wins!");
         } else {
-            System.out.println("Push!");
+            ui.showEndGameMessage("Push!");
         }
     }
 

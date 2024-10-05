@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class UI {
-    private Game game;
+    private final Game game;
     private JFrame frame;
     private JPanel playerPanel;
     private JPanel dealerPanel;
@@ -41,10 +41,8 @@ public class UI {
 
         drawButton.addActionListener(e -> {
             game.playerDrawCard();
-            game.dealerDrawCard();
-            updateUI();
             if (game.isGameOver()) {
-                endGame();
+                game.endGame();
             }
         });
 
@@ -53,7 +51,7 @@ public class UI {
                 game.dealerDrawCard();
             }
             updateUI();
-            determineWinner();
+            game.endGame();
         });
 
         restartButton.addActionListener(e -> {
@@ -109,39 +107,9 @@ public class UI {
         panel.repaint();
     }
 
-    private void endGame() {
+    public void showEndGameMessage(String message) {
         drawButton.setEnabled(false);
         stayButton.setEnabled(false);
-        int playerPoints = game.calculatePoints(game.getPlayer().getHand());
-        int dealerPoints = game.calculatePoints(game.getDealer().getHand());
-        String message;
-        if (playerPoints > 21) {
-            message = "Player busts! Dealer wins!";
-        } else if (dealerPoints > 21) {
-            message = "Dealer busts! Player wins!";
-        } else {
-            message = "Game over!";
-        }
-        JOptionPane.showMessageDialog(frame, message);
-    }
-
-    private void determineWinner() {
-        drawButton.setEnabled(false);
-        stayButton.setEnabled(false);
-        int playerPoints = game.calculatePoints(game.getPlayer().getHand());
-        int dealerPoints = game.calculatePoints(game.getDealer().getHand());
-        String message;
-        if (playerPoints > dealerPoints && playerPoints <= 21) {
-            message = "Player wins!";
-        } else if (dealerPoints > playerPoints && dealerPoints <= 21) {
-            message = "Dealer wins!";
-        } else if (playerPoints == dealerPoints) {
-            message = "It's a tie!";
-        } else if (playerPoints > 21) {
-            message = "Player busts! Dealer wins!";
-        } else {
-            message = "Dealer busts! Player wins!";
-        }
         JOptionPane.showMessageDialog(frame, message);
     }
 }
