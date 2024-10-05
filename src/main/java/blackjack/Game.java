@@ -73,25 +73,10 @@ public class Game {
 
         for (Card card : hand) {
             switch (card.getRank()) {
-                case "2":
-                case "3":
-                case "4":
-                case "5":
-                case "6":
-                case "7":
-                case "8":
-                case "9":
-                case "10":
-                    value += Integer.parseInt(card.getRank());
-                    break;
-                case "jack":
-                case "queen":
-                case "king":
-                    value += 10;
-                    break;
-                case "ace":
-                    aceCount++;
-                    break;
+                case "2", "3", "4", "5", "6", "7", "8", "9", "10" -> value += Integer.parseInt(card.getRank());
+                case "jack", "queen", "king" -> value += 10;
+                case "ace" -> aceCount++;
+                default -> throw new IllegalArgumentException("Unexpected card rank: " + card.getRank());
             }
         }
 

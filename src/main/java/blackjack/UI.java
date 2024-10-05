@@ -15,7 +15,7 @@ public class UI {
     private JPanel dealerPanel;
     private JButton drawButton;
     private JButton stayButton;
-    private JButton restartButton;
+    // private JButton restartButton; // Removed field declaration
     private JLabel playerScoreLabel;
     private JLabel dealerScoreLabel;
 
@@ -35,7 +35,7 @@ public class UI {
         dealerPanel = new JPanel();
         drawButton = new JButton("Draw Card");
         stayButton = new JButton("Stay");
-        restartButton = new JButton("Restart");
+        JButton restartButton = new JButton("Restart");
         playerScoreLabel = new JLabel("Player Score: 0");
         dealerScoreLabel = new JLabel("Dealer Score: 0");
 
