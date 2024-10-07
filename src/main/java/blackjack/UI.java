@@ -9,11 +9,17 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class UI {
+    private static final String BALANCE_LABEL = "Balance: ";
+    private static final String CURRENT_BET_LABEL = "Current Bet: ";
+    private static final String FONT_STYLE = "Courier New";
     private final Game game;
+    private final Balance balance;
+
     private JFrame frame;
     private JPanel playerPanel;
     private JPanel dealerPanel;
     private JPanel betPanel;
+
     private JButton drawButton;
     private JButton stayButton;
     private JButton startGameButton;
@@ -23,11 +29,10 @@ public class UI {
     private JLabel dealerScoreLabel;
     private JLabel balanceLabel;
     private JLabel currentBetLabel;
-    private int balance = 2000;
-    private int currentBet = 0;
 
     public UI(Game game) {
         this.game = game;
+        this.balance = new Balance(2000);
     }
 
     public void createAndShowGUI() {
@@ -37,7 +42,6 @@ public class UI {
         frame.getContentPane().setBackground(new Color(0, 128, 0));
         showBettingView();
     }
-
 
     public void startGame() {
         frame.getContentPane().removeAll(); // üres panel
@@ -50,13 +54,17 @@ public class UI {
         backButton = new JButton("Back to Menu");
         playerScoreLabel = new JLabel("Player Score: 0");
         dealerScoreLabel = new JLabel("Dealer Score: 0");
-        balanceLabel = new JLabel("Balance: " + balance);
-        currentBetLabel = new JLabel("Current Bet: " + currentBet);
+        balanceLabel = new JLabel(BALANCE_LABEL + balance.getBalance());
+        currentBetLabel = new JLabel(CURRENT_BET_LABEL + balance.getCurrentBet());
     
-        stayButton.addActionListener(e -> game.endGame());
+        stayButton.addActionListener(e -> {
+            game.endGame();
+            updateUI();
+        });
     
         resetButton.addActionListener(e -> {
             game.restart();
+            balance.resetBet();
             updateUI();
         });
     
@@ -71,6 +79,7 @@ public class UI {
         backButton.addActionListener(e -> {
             showBettingView();
             game.restart();
+            balance.resetBet();
             updateUI();
         });
     
@@ -114,7 +123,6 @@ public class UI {
         updateUI();
     }
 
-
     private void showBettingView() {
         frame.getContentPane().removeAll();
 
@@ -123,15 +131,15 @@ public class UI {
         betPanel.setOpaque(false);
 
         JLabel titleLabel = new JLabel("BLACKJACK");
-        titleLabel.setFont(new Font("Courier New", Font.BOLD,44));
+        titleLabel.setFont(new Font(FONT_STYLE, Font.BOLD, 44));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        balanceLabel = new JLabel("Balance: " + balance);
-        balanceLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 18));
+        balanceLabel = new JLabel(BALANCE_LABEL + balance.getBalance());
+        balanceLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        currentBetLabel = new JLabel("Current Bet: " + currentBet);
-        currentBetLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 18));
+        currentBetLabel = new JLabel(CURRENT_BET_LABEL + balance.getCurrentBet());
+        currentBetLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         currentBetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JButton bet5Button = new JButton("Bet 5");
@@ -179,13 +187,12 @@ public class UI {
     }
 
     private void addBet(int amount) {
-        if (balance >= amount) {
-            balance -= amount;
-            currentBet += amount;
-            balanceLabel.setText("Balance: " + balance);
-            currentBetLabel.setText("Current Bet: " + currentBet);
-        } else {
-            JOptionPane.showMessageDialog(frame, "Not enough balance!");
+        try {
+            balance.addBet(amount);
+            balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
+            currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage());
         }
     }
 
@@ -194,23 +201,23 @@ public class UI {
         updatePanel(dealerPanel, game.getDealer().getHand(), game.getDealer().hasHiddenCard());
     
         playerScoreLabel.setText("Player Score: " + game.calculatePoints(game.getPlayer().getHand()));
-        playerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
+        playerScoreLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 16));
     
         if (game.getDealer().hasHiddenCard()) {
             // Csak az első lap pontszámát jelenítjük meg
             List<Card> dealerVisibleHand = List.of(game.getDealer().getHand().get(0));
             dealerScoreLabel.setText("Dealer Score: " + game.calculatePoints(dealerVisibleHand));
-            dealerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
+            dealerScoreLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 16));
         } else {
             // Az összes lap pontszámát jelenítjük meg
             dealerScoreLabel.setText("Dealer Score: " + game.calculatePoints(game.getDealer().getHand()));
-            dealerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
+            dealerScoreLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 16));
         }
 
-        balanceLabel.setText("Balance: " + balance);
-        balanceLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
-        currentBetLabel.setText("Current Bet: " + currentBet);
-        currentBetLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
+        balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
+        balanceLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 16));
+        currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
+        currentBetLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 16));
     }
 
     private void updatePanel(JPanel panel, List<Card> hand) {
@@ -250,13 +257,12 @@ public class UI {
         JOptionPane.showMessageDialog(frame, message);
 
         if (message.contains("Player wins!")) {
-            balance += currentBet * 2;
-        } else if(message.contains("Dealer wins!")){
-            balance -= currentBet;
+            balance.winBet();
+        } else if (message.contains("Dealer wins!")) {
+            balance.loseBet();
         }
 
-
-        balanceLabel.setText("Balance: " + balance);
-        currentBetLabel.setText("Current Bet: " + currentBet);
+        balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
+        currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
     }
 }
