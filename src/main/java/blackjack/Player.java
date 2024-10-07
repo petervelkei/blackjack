@@ -22,6 +22,11 @@ public class Player {
         hand.clear();
     }
 
+    // addhand
+    public void addHand(List<Card> cards) {
+        hand.addAll(cards);
+    }
+
     public int getHandValue() {
         int value = 0;
         int aceCount = 0;

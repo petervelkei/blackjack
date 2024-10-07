@@ -1,5 +1,6 @@
 package blackjack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -101,5 +102,18 @@ public class Game {
         player.reset();
         dealer.reset();
         dealInitialCards();
+    }
+
+    public void split() {
+        if (player.getHand().size() == 2 && player.getHand().get(0).getRank().equals(player.getHand().get(1).getRank())) {
+            List<Card> newHand = new ArrayList<>();
+            newHand.add(player.getHand().remove(1));
+            player.addCard(deck.draw());
+            player.addHand(newHand);
+            player.addCard(deck.draw());
+            ui.updateUI();
+        } else {
+            throw new IllegalArgumentException("Cannot split hand!");
+        }
     }
 }

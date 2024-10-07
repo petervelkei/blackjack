@@ -22,6 +22,8 @@ public class UI {
 
     private JButton drawButton;
     private JButton stayButton;
+    private JButton doubleButton;
+    private JButton splitButton;
     private JButton startGameButton;
     private JButton backButton;
     private JButton resetButton;
@@ -38,7 +40,7 @@ public class UI {
     public void createAndShowGUI() {
         frame = new JFrame("Blackjack");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1000, 800);
         frame.getContentPane().setBackground(new Color(0, 128, 0));
         showBettingView();
     }
@@ -50,6 +52,8 @@ public class UI {
         dealerPanel = new JPanel();
         drawButton = new JButton("Hit");
         stayButton = new JButton("Stand");
+        doubleButton = new JButton("Double");
+        splitButton = new JButton("Split");
         resetButton = new JButton("Reset Game");
         backButton = new JButton("Back to Menu");
         playerScoreLabel = new JLabel("Player Score: 0");
@@ -62,6 +66,11 @@ public class UI {
             updateUI();
         });
     
+        resetButton.addActionListener(e -> {
+            game.restart();
+            startGame();
+        });
+    
         drawButton.addActionListener(e -> {
             game.playerDrawCard();
             if (game.isGameOver()) {
@@ -70,12 +79,29 @@ public class UI {
             updateUI();
         });
 
-        resetButton.addActionListener(e -> {
-            game.restart();
-            startGame();
+        doubleButton.addActionListener(e -> {
+            try {
+                balance.addBet(balance.getCurrentBet());
+                game.playerDrawCard();
+                if (!game.isGameOver()) {
+                    game.endGame();
+                }
+                updateUI();
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(frame, ex.getMessage());
+            }
+        });
+
+        splitButton.addActionListener(e -> {
+            try {
+                game.split();
+                balance.addBet(balance.getCurrentBet());
+                updateUI();
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(frame, ex.getMessage());
+            }
         });
     
-
         backButton.addActionListener(e -> {
             showBettingView();
             game.restart();
@@ -94,6 +120,8 @@ public class UI {
     
         drawButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         stayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        doubleButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        splitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         resetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -103,6 +131,10 @@ public class UI {
         buttonPanel.add(drawButton);
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(stayButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(doubleButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(splitButton);
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(resetButton);
         buttonPanel.add(Box.createVerticalStrut(10));
@@ -125,53 +157,53 @@ public class UI {
 
     private void showBettingView() {
         frame.getContentPane().removeAll();
-    
+
         betPanel = new JPanel();
         betPanel.setLayout(new BoxLayout(betPanel, BoxLayout.Y_AXIS));
         betPanel.setOpaque(false);
-    
+
         JLabel titleLabel = new JLabel("BLACKJACK");
         titleLabel.setFont(new Font(FONT_STYLE, Font.BOLD, 44));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+
         balanceLabel = new JLabel(BALANCE_LABEL + balance.getBalance());
         balanceLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+
         currentBetLabel = new JLabel(CURRENT_BET_LABEL + balance.getCurrentBet());
         currentBetLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         currentBetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    
+
         betPanel.add(Box.createVerticalGlue());
         betPanel.add(titleLabel);
         betPanel.add(Box.createVerticalStrut(20));
         betPanel.add(balanceLabel);
         betPanel.add(currentBetLabel);
         betPanel.add(Box.createVerticalStrut(10));
-    
+
         JPanel chipsPanel = new JPanel();
         chipsPanel.setLayout(new BoxLayout(chipsPanel, BoxLayout.X_AXIS));
         chipsPanel.setOpaque(false);
-    
+
         addChipButton(chipsPanel, "5.png", 5);
         addChipButton(chipsPanel, "10.png", 10);
-        addChipButton(chipsPanel, "20.png", 20);
+        addChipButton(chipsPanel, "25.png", 25);
         addChipButton(chipsPanel, "50.png", 50);
         addChipButton(chipsPanel, "100.png", 100);
-    
+
         betPanel.add(chipsPanel);
         betPanel.add(Box.createVerticalStrut(10));
-    
+
         startGameButton = new JButton("Start Game");
         startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startGameButton.addActionListener(e -> startGame());
         betPanel.add(startGameButton);
         betPanel.add(Box.createVerticalGlue());
-    
+
         frame.add(betPanel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
-    
+
     private void addChipButton(JPanel panel, String imageName, int amount) {
         try {
             URL imageUrl = getClass().getClassLoader().getResource("chips/" + imageName);
@@ -198,7 +230,7 @@ public class UI {
             System.err.println("Hiba a kép betöltésekor: " + imageName);
         }
     }
-    
+
     private void addBet(int amount) {
         try {
             balance.addBet(amount);
@@ -206,7 +238,7 @@ public class UI {
             JOptionPane.showMessageDialog(frame, e.getMessage());
         }
     }
-    
+
     private void updateBalanceLabels() {
         balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
         currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
@@ -270,6 +302,8 @@ public class UI {
     public void showEndGameMessage(String message) {
         drawButton.setEnabled(false);
         stayButton.setEnabled(false);
+        doubleButton.setEnabled(false);
+        splitButton.setEnabled(false);
         JOptionPane.showMessageDialog(frame, message);
 
         if (message.contains("Player wins!")) {
