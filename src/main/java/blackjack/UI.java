@@ -62,12 +62,6 @@ public class UI {
             updateUI();
         });
     
-        resetButton.addActionListener(e -> {
-            game.restart();
-            balance.resetBet();
-            updateUI();
-        });
-    
         drawButton.addActionListener(e -> {
             game.playerDrawCard();
             if (game.isGameOver()) {
@@ -75,7 +69,13 @@ public class UI {
             }
             updateUI();
         });
+
+        resetButton.addActionListener(e -> {
+            game.restart();
+            startGame();
+        });
     
+
         backButton.addActionListener(e -> {
             showBettingView();
             game.restart();
@@ -125,75 +125,91 @@ public class UI {
 
     private void showBettingView() {
         frame.getContentPane().removeAll();
-
+    
         betPanel = new JPanel();
         betPanel.setLayout(new BoxLayout(betPanel, BoxLayout.Y_AXIS));
         betPanel.setOpaque(false);
-
+    
         JLabel titleLabel = new JLabel("BLACKJACK");
         titleLabel.setFont(new Font(FONT_STYLE, Font.BOLD, 44));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+    
         balanceLabel = new JLabel(BALANCE_LABEL + balance.getBalance());
         balanceLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+    
         currentBetLabel = new JLabel(CURRENT_BET_LABEL + balance.getCurrentBet());
         currentBetLabel.setFont(new Font(FONT_STYLE, Font.CENTER_BASELINE, 18));
         currentBetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton bet5Button = new JButton("Bet 5");
-        JButton bet10Button = new JButton("Bet 10");
-        JButton bet25Button = new JButton("Bet 25");
-        JButton bet50Button = new JButton("Bet 50");
-        JButton bet100Button = new JButton("Bet 100");
-        startGameButton = new JButton("Start Game");
-
-        bet5Button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bet10Button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bet25Button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bet50Button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bet100Button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        bet5Button.addActionListener(e -> addBet(5));
-        bet10Button.addActionListener(e -> addBet(10));
-        bet25Button.addActionListener(e -> addBet(25));
-        bet50Button.addActionListener(e -> addBet(50));
-        bet100Button.addActionListener(e -> addBet(100));
-        startGameButton.addActionListener(e -> startGame());
-
+    
         betPanel.add(Box.createVerticalGlue());
         betPanel.add(titleLabel);
         betPanel.add(Box.createVerticalStrut(20));
         betPanel.add(balanceLabel);
         betPanel.add(currentBetLabel);
         betPanel.add(Box.createVerticalStrut(10));
-        betPanel.add(bet5Button);
+    
+        JPanel chipsPanel = new JPanel();
+        chipsPanel.setLayout(new BoxLayout(chipsPanel, BoxLayout.X_AXIS));
+        chipsPanel.setOpaque(false);
+    
+        addChipButton(chipsPanel, "5.png", 5);
+        addChipButton(chipsPanel, "10.png", 10);
+        addChipButton(chipsPanel, "20.png", 20);
+        addChipButton(chipsPanel, "50.png", 50);
+        addChipButton(chipsPanel, "100.png", 100);
+    
+        betPanel.add(chipsPanel);
         betPanel.add(Box.createVerticalStrut(10));
-        betPanel.add(bet10Button);
-        betPanel.add(Box.createVerticalStrut(10));
-        betPanel.add(bet25Button);
-        betPanel.add(Box.createVerticalStrut(10));
-        betPanel.add(bet50Button);
-        betPanel.add(Box.createVerticalStrut(10));
-        betPanel.add(bet100Button);
-        betPanel.add(Box.createVerticalStrut(10));
+    
+        startGameButton = new JButton("Start Game");
+        startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        startGameButton.addActionListener(e -> startGame());
         betPanel.add(startGameButton);
         betPanel.add(Box.createVerticalGlue());
-
+    
         frame.add(betPanel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
-
+    
+    private void addChipButton(JPanel panel, String imageName, int amount) {
+        try {
+            URL imageUrl = getClass().getClassLoader().getResource("chips/" + imageName);
+            if (imageUrl != null) {
+                BufferedImage originalImage = ImageIO.read(imageUrl);
+                Image scaledImage = originalImage.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                JButton chipButton = new JButton(new ImageIcon(scaledImage));
+                chipButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+                chipButton.setBackground(new Color(0, 128, 0));
+                chipButton.setBorderPainted(false); // Keret eltávolítása
+                chipButton.setFocusPainted(false); // Fókusz keret eltávolítása
+                chipButton.setContentAreaFilled(false); // Tartalom terület kitöltésének eltávolítása
+                chipButton.setOpaque(true); // Átlátszatlanság beállítása
+                chipButton.addActionListener(e -> {
+                    addBet(amount);
+                    updateBalanceLabels();
+                });
+                panel.add(Box.createHorizontalStrut(10));
+                panel.add(chipButton);
+            } else {
+                System.err.println("Kép nem található: " + imageName);
+            }
+        } catch (IOException e) {
+            System.err.println("Hiba a kép betöltésekor: " + imageName);
+        }
+    }
+    
     private void addBet(int amount) {
         try {
             balance.addBet(amount);
-            balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
-            currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(frame, e.getMessage());
         }
+    }
+    
+    private void updateBalanceLabels() {
+        balanceLabel.setText(BALANCE_LABEL + balance.getBalance());
+        currentBetLabel.setText(CURRENT_BET_LABEL + balance.getCurrentBet());
     }
 
     public void updateUI() {

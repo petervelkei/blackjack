@@ -9,6 +9,10 @@ public class Deck {
 
     public Deck() {
         cards = new ArrayList<>();
+        initializeDeck();
+    }
+
+    private void initializeDeck(){
         String[] suits = {"hearts", "diamonds", "clubs", "spades"};
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"};
 
@@ -35,15 +39,6 @@ public class Deck {
 
     public void reset() {
         cards.clear();
-        String[] suits = {"hearts", "diamonds", "clubs", "spades"};
-        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"};
-
-        for (String suit : suits) {
-            for (String rank : ranks) {
-                String imagePath = "cards/" + rank + "_of_" + suit + ".png";
-                cards.add(new Card(suit, rank, imagePath));
-            }
-        }
-        shuffleCards();
+        initializeDeck();
     }
 }

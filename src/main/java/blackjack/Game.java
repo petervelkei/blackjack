@@ -101,6 +101,5 @@ public class Game {
         player.reset();
         dealer.reset();
         dealInitialCards();
-        ui.updateUI();
     }
 }

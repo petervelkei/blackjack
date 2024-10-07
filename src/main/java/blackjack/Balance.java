@@ -1,16 +1,16 @@
 package blackjack;
 
 public class Balance {
-    private int balance;
+    private int totalBalance;
     private int currentBet;
 
     public Balance(int initialBalance) {
-        this.balance = initialBalance;
+        this.totalBalance = initialBalance;
         this.currentBet = 0;
     }
 
     public int getBalance() {
-        return balance;
+        return totalBalance;
     }
 
     public int getCurrentBet() {
@@ -18,8 +18,8 @@ public class Balance {
     }
 
     public void addBet(int amount) {
-        if (balance >= amount) {
-            balance -= amount;
+        if (totalBalance >= amount) {
+            totalBalance -= amount;
             currentBet += amount;
         } else {
             throw new IllegalArgumentException("Not enough balance!");
@@ -27,16 +27,15 @@ public class Balance {
     }
 
     public void winBet() {
-        balance += currentBet * 2;
-        currentBet = 0;
+        currentBet *= 2;
     }
 
     public void loseBet() {
-        currentBet = 0;
+        totalBalance -= currentBet;
     }
 
     public void resetBet() {
-        balance += currentBet;
+        totalBalance += currentBet;
         currentBet = 0;
     }
 }
