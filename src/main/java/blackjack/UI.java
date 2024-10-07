@@ -39,9 +39,9 @@ public class UI {
     }
 
 
-    public void startGame(){
-        frame.getContentPane().removeAll(); // ures panel
-
+    public void startGame() {
+        frame.getContentPane().removeAll(); // üres panel
+    
         playerPanel = new JPanel();
         dealerPanel = new JPanel();
         drawButton = new JButton("Hit");
@@ -52,63 +52,68 @@ public class UI {
         dealerScoreLabel = new JLabel("Dealer Score: 0");
         balanceLabel = new JLabel("Balance: " + balance);
         currentBetLabel = new JLabel("Current Bet: " + currentBet);
-
+    
+        stayButton.addActionListener(e -> game.endGame());
+    
+        resetButton.addActionListener(e -> {
+            game.restart();
+            updateUI();
+        });
+    
         drawButton.addActionListener(e -> {
             game.playerDrawCard();
             if (game.isGameOver()) {
                 game.endGame();
             }
+            updateUI();
         });
-
-
-        stayButton.addActionListener(e -> game.endGame());
-        
+    
         backButton.addActionListener(e -> {
             showBettingView();
             game.restart();
-            balance += currentBet;
-            currentBet = 0;
             updateUI();
         });
-
-
-        resetButton.addActionListener(e -> game.restart());
-
-
-
+    
         playerPanel.setOpaque(false);
         dealerPanel.setOpaque(false);
-
+    
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBackground(new Color(0, 128, 0)); // Zöld szín
         buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
-
+    
         drawButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         stayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         resetButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        currentBetLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(drawButton);
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(stayButton);
         buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(resetButton);
-        buttonPanel.add(Box.createVerticalGlue());
+        buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(backButton);
         buttonPanel.add(Box.createVerticalStrut(10));
-
+        buttonPanel.add(balanceLabel);
+        buttonPanel.add(Box.createVerticalStrut(10));
+        buttonPanel.add(currentBetLabel);
+        buttonPanel.add(Box.createVerticalGlue());
+    
         frame.add(playerPanel, BorderLayout.SOUTH);
         frame.add(dealerPanel, BorderLayout.NORTH);
         frame.add(buttonPanel, BorderLayout.CENTER);
         frame.add(playerScoreLabel, BorderLayout.WEST);
         frame.add(dealerScoreLabel, BorderLayout.EAST);
-
-
+    
         frame.setVisible(true);
         updateUI();
     }
+
 
     private void showBettingView() {
         frame.getContentPane().removeAll();
@@ -188,19 +193,24 @@ public class UI {
         updatePanel(playerPanel, game.getPlayer().getHand());
         updatePanel(dealerPanel, game.getDealer().getHand(), game.getDealer().hasHiddenCard());
     
-        playerScoreLabel.setText("<html>Player Score: " + game.calculatePoints(game.getPlayer().getHand()) + "<br>Bet: " + currentBet + "<br>Balance: " + balance + "</html>");
+        playerScoreLabel.setText("Player Score: " + game.calculatePoints(game.getPlayer().getHand()));
+        playerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
     
         if (game.getDealer().hasHiddenCard()) {
             // Csak az első lap pontszámát jelenítjük meg
             List<Card> dealerVisibleHand = List.of(game.getDealer().getHand().get(0));
             dealerScoreLabel.setText("Dealer Score: " + game.calculatePoints(dealerVisibleHand));
+            dealerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
         } else {
             // Az összes lap pontszámát jelenítjük meg
             dealerScoreLabel.setText("Dealer Score: " + game.calculatePoints(game.getDealer().getHand()));
+            dealerScoreLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
         }
 
         balanceLabel.setText("Balance: " + balance);
+        balanceLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
         currentBetLabel.setText("Current Bet: " + currentBet);
+        currentBetLabel.setFont(new Font("Courier New", Font.CENTER_BASELINE, 16));
     }
 
     private void updatePanel(JPanel panel, List<Card> hand) {
@@ -238,5 +248,15 @@ public class UI {
         drawButton.setEnabled(false);
         stayButton.setEnabled(false);
         JOptionPane.showMessageDialog(frame, message);
+
+        if (message.contains("Player wins!")) {
+            balance += currentBet * 2;
+        } else if(message.contains("Dealer wins!")){
+            balance -= currentBet;
+        }
+
+
+        balanceLabel.setText("Balance: " + balance);
+        currentBetLabel.setText("Current Bet: " + currentBet);
     }
 }

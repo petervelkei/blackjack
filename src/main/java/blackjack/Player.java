@@ -74,7 +74,7 @@ public class Player {
     }
 
     public boolean hasBetterHandThan(Player other) {
-        return getHandValue() > other.getHandValue();
+        return getHandValue() > other.getHandValue() && !isBusted();
     }
 
     public boolean hasLesserHandThan(Player other) {

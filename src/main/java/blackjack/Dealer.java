@@ -29,7 +29,7 @@ public class Dealer extends Player {
 
     @Override
     public boolean hasBetterHandThan(Player other) {
-        return getHandValue() > other.getHandValue();
+        return getHandValue() > other.getHandValue() && !isBusted();
     }
 
     @Override
