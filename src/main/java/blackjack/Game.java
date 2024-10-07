@@ -32,14 +32,14 @@ public class Game {
         player.addCard(deck.draw());
         player.addCard(deck.draw());
         dealer.addCard(deck.draw());
-        dealer.addCard(deck.draw());
+        dealer.addCard(deck.draw(), true);
         ui.updateUI();
     }
 
     public void playerDrawCard() {
         player.addCard(deck.draw());
         ui.updateUI();
-        if (player.isBusted()) {
+        if (player.isBusted() || player.hasBlackjack()) {
             endGame();
         }
     }
@@ -49,18 +49,23 @@ public class Game {
         ui.updateUI();
     }
 
+    public Deck getDeck() {
+        return deck;
+    }
+
     public boolean isGameOver() {
-        return player.isBusted() || dealer.isBusted() || player.isStanding();
+        return player.isBusted() || dealer.isBusted() || player.isStanding() || player.hasBlackjack() || dealer.hasBlackjack(); 
     }
 
     public void endGame() {
+        dealer.revealHiddenCard(); // Felfedjük a lefordított lapot
         while (dealer.mustDrawCard()) {
             dealerDrawCard();
         }
 
-        if (dealer.isBusted() || player.hasBetterHandThan(dealer)) {
+        if (dealer.isBusted() || player.hasBetterHandThan(dealer) || player.hasBlackjack()) {
             ui.showEndGameMessage("Player wins!");
-        } else if (player.isBusted() || dealer.hasBetterHandThan(player)) {
+        } else if (player.isBusted() || dealer.hasBetterHandThan(player) || dealer.hasBlackjack()) {
             ui.showEndGameMessage("Dealer wins!");
         } else {
             ui.showEndGameMessage("Push!");

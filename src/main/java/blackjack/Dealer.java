@@ -1,6 +1,8 @@
 package blackjack;
 
 public class Dealer extends Player {
+    private boolean hasHiddenCard = false;
+
     public boolean mustDrawCard() {
         return getHandValue() < 17;
     }
@@ -43,5 +45,20 @@ public class Dealer extends Player {
     @Override
     public void addCard(Card card) {
         getHand().add(card);
+    }
+
+    public void addCard(Card card, boolean hidden) {
+        if (hidden) {
+            hasHiddenCard = true;
+        }
+        addCard(card);
+    }
+
+    public void revealHiddenCard() {
+        hasHiddenCard = false;
+    }
+
+    public boolean hasHiddenCard() {
+        return hasHiddenCard;
     }
 }
