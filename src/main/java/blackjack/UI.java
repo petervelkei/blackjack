@@ -24,15 +24,11 @@ public class UI {
     private JFrame frame;
     private JPanel playerPanel;
     private JPanel dealerPanel;
-    private JPanel betPanel;
-
+    
     private JButton drawButton;
     private JButton stayButton;
     private JButton doubleButton;
     private JButton splitButton;
-    private JButton startGameButton;
-    private JButton backButton;
-    private JButton resetButton;
     private JLabel playerScoreLabel;
     private JLabel dealerScoreLabel;
     private JLabel balanceLabel;
@@ -89,8 +85,8 @@ public class UI {
         stayButton = new JButton("Stand");
         doubleButton = new JButton("Double");
         splitButton = new JButton("Split");
-        resetButton = new JButton("Reset Game");
-        backButton = new JButton("Back to Menu");
+        JButton resetButton = new JButton("Reset Game");
+        JButton backButton = new JButton("Back to Menu");
         playerScoreLabel = new JLabel("Player Score: 0");
         dealerScoreLabel = new JLabel("Dealer Score: 0");
         balanceLabel = new JLabel(BALANCE_LABEL + balance.getBalance());
@@ -216,7 +212,7 @@ public class UI {
         frame.getContentPane().removeAll();
     
         // Létrehozza a fogadási panelt és beállítja a layoutot
-        betPanel = new JPanel();
+        JPanel betPanel = new JPanel();
         betPanel.setLayout(new BoxLayout(betPanel, BoxLayout.Y_AXIS));
         betPanel.setOpaque(false);
     
@@ -260,7 +256,7 @@ public class UI {
         betPanel.add(Box.createVerticalStrut(10));
     
         // Létrehozza és beállítja a "Start Game" gombot
-        startGameButton = new JButton("Start Game");
+        JButton startGameButton = new JButton("Start Game");
         startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startGameButton.addActionListener(e -> startGame());
         betPanel.add(startGameButton);

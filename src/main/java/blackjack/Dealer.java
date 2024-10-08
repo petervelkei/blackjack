@@ -18,34 +18,14 @@ public class Dealer extends Player {
         return getHandValue() < 17;
     }
 
-    /**
-     * Ellenőrzi, hogy az osztó keze túllépte-e a 21-et.
-     * 
-     * @return true, ha az osztó keze túllépte a 21-et, különben false.
-     */
-    @Override
-    public boolean isBusted() {
-        return getHandValue() > 21;
-    }
 
     /**
      * Ellenőrzi, hogy az osztó megállt-e (keze értéke legalább 17).
      * 
      * @return true, ha az osztó keze legalább 17, különben false.
      */
-    @Override
     public boolean isStanding() {
         return getHandValue() >= 17;
-    }
-
-    /**
-     * Ellenőrzi, hogy az osztónak blackjack-je van-e.
-     * 
-     * @return true, ha az osztó keze pontosan 21 és két kártyából áll, különben false.
-     */
-    @Override
-    public boolean hasBlackjack() {
-        return getHandValue() == 21 && getHand().size() == 2;
     }
 
     /**

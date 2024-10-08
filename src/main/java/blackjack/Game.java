@@ -113,7 +113,7 @@ public class Game {
      * @return true, ha a játék véget ért, különben false.
      */
     public boolean isGameOver() {
-        return player.isBusted() || dealer.isBusted() || player.isStanding() || player.hasBlackjack() || dealer.hasBlackjack(); 
+        return player.isBusted() || dealer.isBusted() || player.hasBlackjack() || dealer.hasBlackjack(); 
     }
 
     /**

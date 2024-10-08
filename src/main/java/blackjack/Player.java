@@ -111,15 +111,6 @@ public class Player {
     }
 
     /**
-     * Ellenőrzi, hogy a játékos megállt-e (keze értéke legalább 17).
-     * 
-     * @return true, ha a játékos keze legalább 17, különben false.
-     */
-    public boolean isStanding() {
-        return getHandValue() >= 17;
-    }
-
-    /**
      * Törli a játékos kezében lévő kártyákat.
      */
     public void clearHand() {
