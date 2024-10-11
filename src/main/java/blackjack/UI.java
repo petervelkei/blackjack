@@ -1,12 +1,25 @@
 package blackjack;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 
 /**
@@ -116,12 +129,10 @@ public class UI {
         // Beállítja a "Double" gomb eseménykezelőjét
         doubleButton.addActionListener(e -> {
             try {
-                balance.addBet(balance.getCurrentBet());
-                game.playerDrawCard();
-                if (!game.isGameOver()) {
-                    game.endGame();
-                }
-                updateUI();
+                balance.addBet(balance.getCurrentBet()); // Megduplázza a tétet
+                game.playerDrawCard(); // A játékos húz egy utolsó lapot
+                game.endGame(); // Azonnal véget ér a játék
+                updateUI(); // Frissíti a felhasználói felületet
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(frame, ex.getMessage());
             }

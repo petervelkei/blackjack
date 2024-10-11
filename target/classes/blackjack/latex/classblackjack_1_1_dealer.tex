@@ -1,0 +1,236 @@
+\doxysection{blackjack.\+Dealer Class Reference}
+\hypertarget{classblackjack_1_1_dealer}{}\label{classblackjack_1_1_dealer}\index{blackjack.Dealer@{blackjack.Dealer}}
+Inheritance diagram for blackjack.\+Dealer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classblackjack_1_1_dealer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_a5bfe790cdd9f65a9835b4f795655eb3c}{must\+Draw\+Card}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_ab5b3fb020244caee6a858f4edad4b3a4}{is\+Busted}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_a63b80c802b54e6056a9372a9ff4bfd2e}{is\+Standing}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_aa13b2eff04ffd704a077d85793f3bec2}{has\+Blackjack}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_ab54050e42745233c5e1e1030d3b40ceb}{is\+Push}} (\mbox{\hyperlink{classblackjack_1_1_player}{Player}} other)
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_a641bc159e56d8d7761e8e57c4dbb70cb}{has\+Better\+Hand\+Than}} (\mbox{\hyperlink{classblackjack_1_1_player}{Player}} other)
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_a9e6f94b8582a35b69bcaa114700e8148}{has\+Lesser\+Hand\+Than}} (\mbox{\hyperlink{classblackjack_1_1_player}{Player}} other)
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_dealer_adfcb86abc29f72e07d76c936ee761e2e}{clear\+Hand}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_dealer_af2d454fd0a238b970f3308743dad6886}{add\+Card}} (\mbox{\hyperlink{classblackjack_1_1_card}{Card}} card)
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_dealer_a98d1328583d62a88ee4f1260b7175420}{add\+Card}} (\mbox{\hyperlink{classblackjack_1_1_card}{Card}} card, boolean hidden)
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_dealer_a16a4e2df2f4e12e827ad0a59f817e860}{reveal\+Hidden\+Card}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_dealer_ab454102660e245a97725a4bc572b6574}{has\+Hidden\+Card}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classblackjack_1_1_player}{blackjack.\+Player}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classblackjack_1_1_player_a3e29ef74bbf96fce007a23faa3fa7df7}{Player}} ()
+\item 
+List$<$ \mbox{\hyperlink{classblackjack_1_1_card}{Card}} $>$ \mbox{\hyperlink{classblackjack_1_1_player_a4ff964a7f3ddcee11a2251c9ae2917c6}{get\+Hand}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_player_a16305605944f4070ae6c594c6efc99f0}{reset}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_player_a592f0c43cbc132ff508d330a5bc0ee8f}{add\+Hand}} (List$<$ \mbox{\hyperlink{classblackjack_1_1_card}{Card}} $>$ cards)
+\item 
+int \mbox{\hyperlink{classblackjack_1_1_player_aad38b0554415b587509b5080ef62fd87}{get\+Hand\+Value}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Dealer osztály, amely a játék osztóját reprezentálja.
+
+A Dealer osztály a Player osztályból származik, és tartalmazza az osztó specifikus logikáját, mint például a kártyák húzásának szabályait és a rejtett kártya kezelését. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classblackjack_1_1_dealer_af2d454fd0a238b970f3308743dad6886}\label{classblackjack_1_1_dealer_af2d454fd0a238b970f3308743dad6886} 
+\index{blackjack.Dealer@{blackjack.Dealer}!addCard@{addCard}}
+\index{addCard@{addCard}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{addCard()}{addCard()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void blackjack.\+Dealer.\+add\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classblackjack_1_1_card}{Card}}}]{card }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Hozzáad egy kártyát az osztó kezéhez.
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & A hozzáadni kívánt kártya. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_ad6d3200d9e15053209c9e1ae0d6d8a8f}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_a98d1328583d62a88ee4f1260b7175420}\label{classblackjack_1_1_dealer_a98d1328583d62a88ee4f1260b7175420} 
+\index{blackjack.Dealer@{blackjack.Dealer}!addCard@{addCard}}
+\index{addCard@{addCard}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{addCard()}{addCard()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void blackjack.\+Dealer.\+add\+Card (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classblackjack_1_1_card}{Card}}}]{card,  }\item[{boolean}]{hidden }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Hozzáad egy kártyát az osztó kezéhez, és beállítja, hogy a kártya rejtett-\/e.
+
+
+\begin{DoxyParams}{Parameters}
+{\em card} & A hozzáadni kívánt kártya. \\
+\hline
+{\em hidden} & Ha true, a kártya rejtett lesz. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classblackjack_1_1_dealer_adfcb86abc29f72e07d76c936ee761e2e}\label{classblackjack_1_1_dealer_adfcb86abc29f72e07d76c936ee761e2e} 
+\index{blackjack.Dealer@{blackjack.Dealer}!clearHand@{clearHand}}
+\index{clearHand@{clearHand}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{clearHand()}{clearHand()}}
+{\footnotesize\ttfamily void blackjack.\+Dealer.\+clear\+Hand (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Törli az osztó kezében lévő kártyákat. 
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_a54b730308efb6205c80cccb3693b4893}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_a641bc159e56d8d7761e8e57c4dbb70cb}\label{classblackjack_1_1_dealer_a641bc159e56d8d7761e8e57c4dbb70cb} 
+\index{blackjack.Dealer@{blackjack.Dealer}!hasBetterHandThan@{hasBetterHandThan}}
+\index{hasBetterHandThan@{hasBetterHandThan}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{hasBetterHandThan()}{hasBetterHandThan()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+has\+Better\+Hand\+Than (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classblackjack_1_1_player}{Player}}}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztó keze jobb-\/e, mint egy másik játékos keze.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & A másik játékos, akivel összehasonlítjuk az osztó kezét. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze jobb, mint a másik játékos keze és az osztó nem lépte túl a 21-\/et, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_a36243d8e66d541ba4a16e3301e99cc45}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_aa13b2eff04ffd704a077d85793f3bec2}\label{classblackjack_1_1_dealer_aa13b2eff04ffd704a077d85793f3bec2} 
+\index{blackjack.Dealer@{blackjack.Dealer}!hasBlackjack@{hasBlackjack}}
+\index{hasBlackjack@{hasBlackjack}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{hasBlackjack()}{hasBlackjack()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+has\+Blackjack (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztónak blackjack-\/je van-\/e.
+
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze pontosan 21 és két kártyából áll, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_a9598f796bd0616d52b1dc76e3f56ad17}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_ab454102660e245a97725a4bc572b6574}\label{classblackjack_1_1_dealer_ab454102660e245a97725a4bc572b6574} 
+\index{blackjack.Dealer@{blackjack.Dealer}!hasHiddenCard@{hasHiddenCard}}
+\index{hasHiddenCard@{hasHiddenCard}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{hasHiddenCard()}{hasHiddenCard()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+has\+Hidden\+Card (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztónak van-\/e rejtett kártyája.
+
+\begin{DoxyReturn}{Returns}
+true, ha az osztónak van rejtett kártyája, különben false. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_dealer_a9e6f94b8582a35b69bcaa114700e8148}\label{classblackjack_1_1_dealer_a9e6f94b8582a35b69bcaa114700e8148} 
+\index{blackjack.Dealer@{blackjack.Dealer}!hasLesserHandThan@{hasLesserHandThan}}
+\index{hasLesserHandThan@{hasLesserHandThan}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{hasLesserHandThan()}{hasLesserHandThan()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+has\+Lesser\+Hand\+Than (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classblackjack_1_1_player}{Player}}}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztó keze rosszabb-\/e, mint egy másik játékos keze.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & A másik játékos, akivel összehasonlítjuk az osztó kezét. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze rosszabb, mint a másik játékos keze, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_a4b30cfde53a04041efe9d6d59f42f67e}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_ab5b3fb020244caee6a858f4edad4b3a4}\label{classblackjack_1_1_dealer_ab5b3fb020244caee6a858f4edad4b3a4} 
+\index{blackjack.Dealer@{blackjack.Dealer}!isBusted@{isBusted}}
+\index{isBusted@{isBusted}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{isBusted()}{isBusted()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+is\+Busted (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztó keze túllépte-\/e a 21-\/et.
+
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze túllépte a 21-\/et, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_aacc9a6e88f5705fe12a18eaf86eebc03}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_ab54050e42745233c5e1e1030d3b40ceb}\label{classblackjack_1_1_dealer_ab54050e42745233c5e1e1030d3b40ceb} 
+\index{blackjack.Dealer@{blackjack.Dealer}!isPush@{isPush}}
+\index{isPush@{isPush}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{isPush()}{isPush()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+is\+Push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classblackjack_1_1_player}{Player}}}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztó keze megegyezik-\/e egy másik játékos kezével.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & A másik játékos, akivel összehasonlítjuk az osztó kezét. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze megegyezik a másik játékos kezével, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_a328f4f27df0a32ef25c5dee9eb5d75e6}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_a63b80c802b54e6056a9372a9ff4bfd2e}\label{classblackjack_1_1_dealer_a63b80c802b54e6056a9372a9ff4bfd2e} 
+\index{blackjack.Dealer@{blackjack.Dealer}!isStanding@{isStanding}}
+\index{isStanding@{isStanding}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{isStanding()}{isStanding()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+is\+Standing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy az osztó megállt-\/e (keze értéke legalább 17).
+
+\begin{DoxyReturn}{Returns}
+true, ha az osztó keze legalább 17, különben false. 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classblackjack_1_1_player_aa46959a551062df2c3af924edba458a2}{blackjack.\+Player}}.
+
+\Hypertarget{classblackjack_1_1_dealer_a5bfe790cdd9f65a9835b4f795655eb3c}\label{classblackjack_1_1_dealer_a5bfe790cdd9f65a9835b4f795655eb3c} 
+\index{blackjack.Dealer@{blackjack.Dealer}!mustDrawCard@{mustDrawCard}}
+\index{mustDrawCard@{mustDrawCard}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{mustDrawCard()}{mustDrawCard()}}
+{\footnotesize\ttfamily boolean blackjack.\+Dealer.\+must\+Draw\+Card (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Meghatározza, hogy az osztónak kell-\/e még kártyát húznia.
+
+\begin{DoxyReturn}{Returns}
+true, ha az osztó kezének értéke kisebb, mint 17, különben false. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_dealer_a16a4e2df2f4e12e827ad0a59f817e860}\label{classblackjack_1_1_dealer_a16a4e2df2f4e12e827ad0a59f817e860} 
+\index{blackjack.Dealer@{blackjack.Dealer}!revealHiddenCard@{revealHiddenCard}}
+\index{revealHiddenCard@{revealHiddenCard}!blackjack.Dealer@{blackjack.Dealer}}
+\doxysubsubsection{\texorpdfstring{revealHiddenCard()}{revealHiddenCard()}}
+{\footnotesize\ttfamily void blackjack.\+Dealer.\+reveal\+Hidden\+Card (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Felfedi az osztó rejtett kártyáját. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Dealer.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,114 @@
+\doxysection{blackjack.\+Balance Class Reference}
+\hypertarget{classblackjack_1_1_balance}{}\label{classblackjack_1_1_balance}\index{blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classblackjack_1_1_balance_aa7d19272cbcace4a575da56ad401e0fd}{Balance}} (int initial\+Balance)
+\item 
+int \mbox{\hyperlink{classblackjack_1_1_balance_ac0e6c3c369351550a76ab99538a2ac57}{get\+Balance}} ()
+\item 
+int \mbox{\hyperlink{classblackjack_1_1_balance_a47dee7eade828ec1284fd7f664fc4498}{get\+Current\+Bet}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_balance_a308bcc357facba5c6490a9b1a0b1a9bf}{add\+Bet}} (int amount)
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_balance_a15658b313ec1211503e16e9051c35fa5}{win\+Bet}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_balance_aff5a60980e90f299115f4efc83825058}{lose\+Bet}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_balance_ab8256db15c4ad371bb648a7aaa9db4ed}{reset\+Bet}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A játékos egyenlegét és fogadásait kezelő osztály.
+
+Ez az osztály kezeli a játékos teljes egyenlegét és a jelenlegi fogadását. Lehetővé teszi a fogadások hozzáadását, a nyeremények és veszteségek kezelését, valamint a fogadások visszaállítását. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classblackjack_1_1_balance_aa7d19272cbcace4a575da56ad401e0fd}\label{classblackjack_1_1_balance_aa7d19272cbcace4a575da56ad401e0fd} 
+\index{blackjack.Balance@{blackjack.Balance}!Balance@{Balance}}
+\index{Balance@{Balance}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{Balance()}{Balance()}}
+{\footnotesize\ttfamily blackjack.\+Balance.\+Balance (\begin{DoxyParamCaption}\item[{int}]{initial\+Balance }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Létrehoz egy új Balance objektumot a megadott kezdeti egyenleggel.
+
+
+\begin{DoxyParams}{Parameters}
+{\em initial\+Balance} & A játékos kezdeti egyenlege. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classblackjack_1_1_balance_a308bcc357facba5c6490a9b1a0b1a9bf}\label{classblackjack_1_1_balance_a308bcc357facba5c6490a9b1a0b1a9bf} 
+\index{blackjack.Balance@{blackjack.Balance}!addBet@{addBet}}
+\index{addBet@{addBet}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{addBet()}{addBet()}}
+{\footnotesize\ttfamily void blackjack.\+Balance.\+add\+Bet (\begin{DoxyParamCaption}\item[{int}]{amount }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Hozzáad egy fogadást a játékos jelenlegi fogadásához.
+
+Ha a játékos teljes egyenlege nagyobb vagy egyenlő a megadott összeggel, akkor a megadott összeget levonja a teljes egyenlegből és hozzáadja a jelenlegi fogadáshoz. Ellenkező esetben Illegal\+Argument\+Exception kivételt dob.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & A hozzáadni kívánt fogadás összege. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & ha a játékos teljes egyenlege kisebb, mint a megadott összeg. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classblackjack_1_1_balance_ac0e6c3c369351550a76ab99538a2ac57}\label{classblackjack_1_1_balance_ac0e6c3c369351550a76ab99538a2ac57} 
+\index{blackjack.Balance@{blackjack.Balance}!getBalance@{getBalance}}
+\index{getBalance@{getBalance}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{getBalance()}{getBalance()}}
+{\footnotesize\ttfamily int blackjack.\+Balance.\+get\+Balance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaadja a játékos teljes egyenlegét.
+
+\begin{DoxyReturn}{Returns}
+A játékos teljes egyenlege. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_balance_a47dee7eade828ec1284fd7f664fc4498}\label{classblackjack_1_1_balance_a47dee7eade828ec1284fd7f664fc4498} 
+\index{blackjack.Balance@{blackjack.Balance}!getCurrentBet@{getCurrentBet}}
+\index{getCurrentBet@{getCurrentBet}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{getCurrentBet()}{getCurrentBet()}}
+{\footnotesize\ttfamily int blackjack.\+Balance.\+get\+Current\+Bet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaadja a játékos jelenlegi fogadásának összegét.
+
+\begin{DoxyReturn}{Returns}
+A játékos jelenlegi fogadásának összege. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_balance_aff5a60980e90f299115f4efc83825058}\label{classblackjack_1_1_balance_aff5a60980e90f299115f4efc83825058} 
+\index{blackjack.Balance@{blackjack.Balance}!loseBet@{loseBet}}
+\index{loseBet@{loseBet}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{loseBet()}{loseBet()}}
+{\footnotesize\ttfamily void blackjack.\+Balance.\+lose\+Bet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Levonja a játékos jelenlegi fogadását a teljes egyenlegből veszteség esetén.
+
+A jelenlegi fogadás összegét levonja a teljes egyenlegből, jelezve, hogy a játékos veszített. \Hypertarget{classblackjack_1_1_balance_ab8256db15c4ad371bb648a7aaa9db4ed}\label{classblackjack_1_1_balance_ab8256db15c4ad371bb648a7aaa9db4ed} 
+\index{blackjack.Balance@{blackjack.Balance}!resetBet@{resetBet}}
+\index{resetBet@{resetBet}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{resetBet()}{resetBet()}}
+{\footnotesize\ttfamily void blackjack.\+Balance.\+reset\+Bet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaállítja a játékos fogadását és hozzáadja a jelenlegi fogadás összegét a teljes egyenleghez.
+
+A jelenlegi fogadás összegét hozzáadja a teljes egyenleghez, majd a jelenlegi fogadást nullára állítja. \Hypertarget{classblackjack_1_1_balance_a15658b313ec1211503e16e9051c35fa5}\label{classblackjack_1_1_balance_a15658b313ec1211503e16e9051c35fa5} 
+\index{blackjack.Balance@{blackjack.Balance}!winBet@{winBet}}
+\index{winBet@{winBet}!blackjack.Balance@{blackjack.Balance}}
+\doxysubsubsection{\texorpdfstring{winBet()}{winBet()}}
+{\footnotesize\ttfamily void blackjack.\+Balance.\+win\+Bet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Megduplázza a játékos jelenlegi fogadását nyeremény esetén.
+
+A jelenlegi fogadás összegét megduplázza, jelezve, hogy a játékos nyert. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Balance.\+java\end{DoxyCompactItemize}

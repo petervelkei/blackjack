@@ -27,57 +27,7 @@ public class Dealer extends Player {
     public boolean isStanding() {
         return getHandValue() >= 17;
     }
-
-    /**
-     * Ellenőrzi, hogy az osztó keze megegyezik-e egy másik játékos kezével.
-     * 
-     * @param other A másik játékos, akivel összehasonlítjuk az osztó kezét.
-     * @return true, ha az osztó keze megegyezik a másik játékos kezével, különben false.
-     */
-    @Override
-    public boolean isPush(Player other) {
-        return getHandValue() == other.getHandValue();
-    }
-
-    /**
-     * Ellenőrzi, hogy az osztó keze jobb-e, mint egy másik játékos keze.
-     * 
-     * @param other A másik játékos, akivel összehasonlítjuk az osztó kezét.
-     * @return true, ha az osztó keze jobb, mint a másik játékos keze és az osztó nem lépte túl a 21-et, különben false.
-     */
-    @Override
-    public boolean hasBetterHandThan(Player other) {
-        return getHandValue() > other.getHandValue() && !isBusted();
-    }
-
-    /**
-     * Ellenőrzi, hogy az osztó keze rosszabb-e, mint egy másik játékos keze.
-     * 
-     * @param other A másik játékos, akivel összehasonlítjuk az osztó kezét.
-     * @return true, ha az osztó keze rosszabb, mint a másik játékos keze, különben false.
-     */
-    @Override
-    public boolean hasLesserHandThan(Player other) {
-        return getHandValue() < other.getHandValue();
-    }
-
-    /**
-     * Törli az osztó kezében lévő kártyákat.
-     */
-    @Override
-    public void clearHand() {
-        getHand().clear();
-    }
-
-    /**
-     * Hozzáad egy kártyát az osztó kezéhez.
-     * 
-     * @param card A hozzáadni kívánt kártya.
-     */
-    @Override
-    public void addCard(Card card) {
-        getHand().add(card);
-    }
+    
 
     /**
      * Hozzáad egy kártyát az osztó kezéhez, és beállítja, hogy a kártya rejtett-e.

@@ -1,0 +1,178 @@
+\doxysection{blackjack.\+Game Class Reference}
+\hypertarget{classblackjack_1_1_game}{}\label{classblackjack_1_1_game}\index{blackjack.Game@{blackjack.Game}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classblackjack_1_1_game_a75efa1e368a436f98a89c273080d8ec8}{Game}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_afa418509dead47b2b71cb3e7e443af93}{start}} ()
+\item 
+\mbox{\hyperlink{classblackjack_1_1_player}{Player}} \mbox{\hyperlink{classblackjack_1_1_game_aad952ebbfd6b16c42221ebacbae09466}{get\+Player}} ()
+\item 
+\mbox{\hyperlink{classblackjack_1_1_dealer}{Dealer}} \mbox{\hyperlink{classblackjack_1_1_game_a3d9f29387edc20a1e40d915b69cfc525}{get\+Dealer}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_ac72dca521f8769870b9af1c544318ab4}{deal\+Initial\+Cards}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_ad21184ca9384194cb185938f1a8e86b6}{player\+Draw\+Card}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_ae47b1eeb8332d54d9513989b13054e0c}{dealer\+Draw\+Card}} ()
+\item 
+\mbox{\hyperlink{classblackjack_1_1_deck}{Deck}} \mbox{\hyperlink{classblackjack_1_1_game_adbd665f27c05a855344a27772ae71adc}{get\+Deck}} ()
+\item 
+boolean \mbox{\hyperlink{classblackjack_1_1_game_a4b430d33bad3f2ab36123d74f1bf75bc}{is\+Game\+Over}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_a5c0d0c6edc058cf5474ee338d4063a7e}{end\+Game}} ()
+\item 
+int \mbox{\hyperlink{classblackjack_1_1_game_a91d715111de010e4e6da2f71a1be45ab}{calculate\+Points}} (List$<$ \mbox{\hyperlink{classblackjack_1_1_card}{Card}} $>$ hand)
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_a7d20bfad318f878e63f17729181a1e96}{restart}} ()
+\item 
+void \mbox{\hyperlink{classblackjack_1_1_game_ada357e1091b77d3c1551aa7bbbabc518}{split}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Game osztály, amely a Blackjack játék logikáját kezeli.
+
+Ez az osztály tartalmazza a játékhoz szükséges összes logikát, beleértve a kártyák osztását, a játékos és az osztó kártyáinak kezelését, a játék állapotának frissítését, valamint a játék végének kezelését. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classblackjack_1_1_game_a75efa1e368a436f98a89c273080d8ec8}\label{classblackjack_1_1_game_a75efa1e368a436f98a89c273080d8ec8} 
+\index{blackjack.Game@{blackjack.Game}!Game@{Game}}
+\index{Game@{Game}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{Game()}{Game()}}
+{\footnotesize\ttfamily blackjack.\+Game.\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Létrehoz egy új Game objektumot, és inicializálja a játékhoz szükséges komponenseket. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classblackjack_1_1_game_a91d715111de010e4e6da2f71a1be45ab}\label{classblackjack_1_1_game_a91d715111de010e4e6da2f71a1be45ab} 
+\index{blackjack.Game@{blackjack.Game}!calculatePoints@{calculatePoints}}
+\index{calculatePoints@{calculatePoints}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{calculatePoints()}{calculatePoints()}}
+{\footnotesize\ttfamily int blackjack.\+Game.\+calculate\+Points (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{classblackjack_1_1_card}{Card}} $>$}]{hand }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Kiszámítja a megadott kéz összértékét.
+
+Az ászok értéke 11 vagy 1 lehet, attól függően, hogy melyik érték tartja a kéz összértékét 21 alatt vagy annak megfelelően.
+
+
+\begin{DoxyParams}{Parameters}
+{\em hand} & A kártyák listája, amelynek összértékét ki kell számítani. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A kéz összértéke. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_game_ae47b1eeb8332d54d9513989b13054e0c}\label{classblackjack_1_1_game_ae47b1eeb8332d54d9513989b13054e0c} 
+\index{blackjack.Game@{blackjack.Game}!dealerDrawCard@{dealerDrawCard}}
+\index{dealerDrawCard@{dealerDrawCard}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{dealerDrawCard()}{dealerDrawCard()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+dealer\+Draw\+Card (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Az osztó húz egy kártyát.
+
+Ez a metódus egy új kártyát ad az osztó kezéhez, majd frissíti a grafikus felhasználói felületet. \Hypertarget{classblackjack_1_1_game_ac72dca521f8769870b9af1c544318ab4}\label{classblackjack_1_1_game_ac72dca521f8769870b9af1c544318ab4} 
+\index{blackjack.Game@{blackjack.Game}!dealInitialCards@{dealInitialCards}}
+\index{dealInitialCards@{dealInitialCards}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{dealInitialCards()}{dealInitialCards()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+deal\+Initial\+Cards (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Kiosztja a kezdeti kártyákat a játékosnak és az osztónak.
+
+Ez a metódus törli a játékos és az osztó kezében lévő kártyákat, majd két-\/két kártyát oszt mindkettőjüknek. Az osztó második kártyája rejtett lesz. Végül frissíti a grafikus felhasználói felületet. \Hypertarget{classblackjack_1_1_game_a5c0d0c6edc058cf5474ee338d4063a7e}\label{classblackjack_1_1_game_a5c0d0c6edc058cf5474ee338d4063a7e} 
+\index{blackjack.Game@{blackjack.Game}!endGame@{endGame}}
+\index{endGame@{endGame}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{endGame()}{endGame()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+end\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Kezeli a játék végét és megjeleníti a megfelelő üzenetet.
+
+Ez a metódus felfedi az osztó rejtett kártyáját, majd az osztó húz kártyákat, amíg a keze értéke el nem éri a 17-\/et. Ezután összehasonlítja a játékos és az osztó kezét, és megjeleníti a megfelelő üzenetet a játék végének eredményéről. \Hypertarget{classblackjack_1_1_game_a3d9f29387edc20a1e40d915b69cfc525}\label{classblackjack_1_1_game_a3d9f29387edc20a1e40d915b69cfc525} 
+\index{blackjack.Game@{blackjack.Game}!getDealer@{getDealer}}
+\index{getDealer@{getDealer}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{getDealer()}{getDealer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classblackjack_1_1_dealer}{Dealer}} blackjack.\+Game.\+get\+Dealer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaadja az osztó objektumot.
+
+\begin{DoxyReturn}{Returns}
+Az osztó objektum. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_game_adbd665f27c05a855344a27772ae71adc}\label{classblackjack_1_1_game_adbd665f27c05a855344a27772ae71adc} 
+\index{blackjack.Game@{blackjack.Game}!getDeck@{getDeck}}
+\index{getDeck@{getDeck}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{getDeck()}{getDeck()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classblackjack_1_1_deck}{Deck}} blackjack.\+Game.\+get\+Deck (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaadja a kártyapakli objektumot.
+
+\begin{DoxyReturn}{Returns}
+A kártyapakli objektum. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_game_aad952ebbfd6b16c42221ebacbae09466}\label{classblackjack_1_1_game_aad952ebbfd6b16c42221ebacbae09466} 
+\index{blackjack.Game@{blackjack.Game}!getPlayer@{getPlayer}}
+\index{getPlayer@{getPlayer}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{getPlayer()}{getPlayer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classblackjack_1_1_player}{Player}} blackjack.\+Game.\+get\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Visszaadja a játékos objektumot.
+
+\begin{DoxyReturn}{Returns}
+A játékos objektum. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_game_a4b430d33bad3f2ab36123d74f1bf75bc}\label{classblackjack_1_1_game_a4b430d33bad3f2ab36123d74f1bf75bc} 
+\index{blackjack.Game@{blackjack.Game}!isGameOver@{isGameOver}}
+\index{isGameOver@{isGameOver}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{isGameOver()}{isGameOver()}}
+{\footnotesize\ttfamily boolean blackjack.\+Game.\+is\+Game\+Over (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Ellenőrzi, hogy a játék véget ért-\/e.
+
+\begin{DoxyReturn}{Returns}
+true, ha a játék véget ért, különben false. 
+\end{DoxyReturn}
+\Hypertarget{classblackjack_1_1_game_ad21184ca9384194cb185938f1a8e86b6}\label{classblackjack_1_1_game_ad21184ca9384194cb185938f1a8e86b6} 
+\index{blackjack.Game@{blackjack.Game}!playerDrawCard@{playerDrawCard}}
+\index{playerDrawCard@{playerDrawCard}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{playerDrawCard()}{playerDrawCard()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+player\+Draw\+Card (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+A játékos húz egy kártyát.
+
+Ez a metódus egy új kártyát ad a játékos kezéhez, majd frissíti a grafikus felhasználói felületet. Ha a játékos keze túllépi a 21-\/et vagy blackjack-\/je van, a játék véget ér. \Hypertarget{classblackjack_1_1_game_a7d20bfad318f878e63f17729181a1e96}\label{classblackjack_1_1_game_a7d20bfad318f878e63f17729181a1e96} 
+\index{blackjack.Game@{blackjack.Game}!restart@{restart}}
+\index{restart@{restart}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{restart()}{restart()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+restart (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Újraindítja a játékot.
+
+Ez a metódus visszaállítja a kártyapaklit, a játékos és az osztó kezét, majd kiosztja a kezdeti kártyákat. \Hypertarget{classblackjack_1_1_game_ada357e1091b77d3c1551aa7bbbabc518}\label{classblackjack_1_1_game_ada357e1091b77d3c1551aa7bbbabc518} 
+\index{blackjack.Game@{blackjack.Game}!split@{split}}
+\index{split@{split}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{split()}{split()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+split (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Osztja a játékos kezét, ha a két kártya azonos értékű.
+
+Ez a metódus ellenőrzi, hogy a játékos kezében lévő két kártya azonos értékű-\/e, és ha igen, akkor két külön kézre osztja őket. Mindkét kézhez egy-\/egy új kártyát húz a pakliból. Ha a kártyák nem oszthatók, Illegal\+Argument\+Exception kivételt dob.
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & ha a játékos keze nem osztható. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classblackjack_1_1_game_afa418509dead47b2b71cb3e7e443af93}\label{classblackjack_1_1_game_afa418509dead47b2b71cb3e7e443af93} 
+\index{blackjack.Game@{blackjack.Game}!start@{start}}
+\index{start@{start}!blackjack.Game@{blackjack.Game}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void blackjack.\+Game.\+start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Elindítja a játékot és inicializálja a grafikus felhasználói felületet.
+
+Ez a metódus létrehozza és megjeleníti a grafikus felhasználói felületet, majd kiosztja a kezdeti kártyákat a játékosnak és az osztónak. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Game.\+java\end{DoxyCompactItemize}

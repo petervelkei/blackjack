@@ -56,6 +56,16 @@ public class Game {
     }
 
     /**
+     * Visszaadja a kártyapakli objektumot.
+     * 
+     * @return A kártyapakli objektum.
+     */
+    public Deck getDeck() {
+        return deck;
+    }
+
+
+    /**
      * Kiosztja a kezdeti kártyákat a játékosnak és az osztónak.
      * 
      * Ez a metódus törli a játékos és az osztó kezében lévő kártyákat, majd
@@ -72,7 +82,7 @@ public class Game {
         ui.updateUI();
     }
 
-    /**
+    /*
      * A játékos húz egy kártyát.
      * 
      * Ez a metódus egy új kártyát ad a játékos kezéhez, majd frissíti a grafikus
@@ -82,10 +92,8 @@ public class Game {
     public void playerDrawCard() {
         player.addCard(deck.draw());
         ui.updateUI();
-        if (player.isBusted() || player.hasBlackjack()) {
-            endGame();
-        }
     }
+
 
     /**
      * Az osztó húz egy kártyát.
@@ -98,14 +106,6 @@ public class Game {
         ui.updateUI();
     }
 
-    /**
-     * Visszaadja a kártyapakli objektumot.
-     * 
-     * @return A kártyapakli objektum.
-     */
-    public Deck getDeck() {
-        return deck;
-    }
 
     /**
      * Ellenőrzi, hogy a játék véget ért-e.
@@ -115,6 +115,7 @@ public class Game {
     public boolean isGameOver() {
         return player.isBusted() || dealer.isBusted() || player.hasBlackjack() || dealer.hasBlackjack(); 
     }
+
 
     /**
      * Kezeli a játék végét és megjeleníti a megfelelő üzenetet.
@@ -128,13 +129,14 @@ public class Game {
         while (dealer.mustDrawCard()) {
             dealerDrawCard();
         }
-
-        if (dealer.isBusted() || player.hasBetterHandThan(dealer) || player.hasBlackjack()) {
-            ui.showEndGameMessage("Player wins!");
-        } else if (player.isBusted() || dealer.hasBetterHandThan(player) || dealer.hasBlackjack()) {
+    
+    
+        if (player.isPush(dealer)) {
+            ui.showEndGameMessage("Push!");
+        } else if (player.isBusted() || (!dealer.isBusted() && dealer.hasBetterHandThan(player)) || (dealer.hasBlackjack() && !player.hasBlackjack())) {
             ui.showEndGameMessage("Dealer wins!");
         } else {
-            ui.showEndGameMessage("Push!");
+            ui.showEndGameMessage("Player wins!");
         }
     }
 

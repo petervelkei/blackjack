@@ -51,15 +51,6 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    /**
-     * Megkeveri a kártyapaklit.
-     * 
-     * Ez a metódus meghívja a shuffleCards metódust, hogy véletlenszerű sorrendbe
-     * rendezze a kártyákat a pakliban.
-     */
-    public void shuffle() {
-        shuffleCards();
-    }
 
     /**
      * Húz egy kártyát a kártyapakli tetejéről.

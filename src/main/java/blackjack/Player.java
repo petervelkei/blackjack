@@ -109,13 +109,7 @@ public class Player {
     public boolean hasBlackjack() {
         return getHandValue() == 21 && hand.size() == 2;
     }
-
-    /**
-     * Törli a játékos kezében lévő kártyákat.
-     */
-    public void clearHand() {
-        hand.clear();
-    }
+    
 
     /**
      * Ellenőrzi, hogy a játékos keze megegyezik-e egy másik játékos kezével.
