@@ -62,7 +62,6 @@ public class UI {
         this.dealerScoreLabel = new JLabel();
         this.balanceLabel = new JLabel();
         this.currentBetLabel = new JLabel();
-
     }
 
 
@@ -129,10 +128,10 @@ public class UI {
         // Beállítja a "Double" gomb eseménykezelőjét
         doubleButton.addActionListener(e -> {
             try {
-                balance.addBet(balance.getCurrentBet()); // Megduplázza a tétet
-                game.playerDrawCard(); // A játékos húz egy utolsó lapot
-                game.endGame(); // Azonnal véget ér a játék
-                updateUI(); // Frissíti a felhasználói felületet
+                balance.addBet(balance.getCurrentBet());
+                game.playerDrawCard();
+                game.endGame();
+                updateUI();
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(frame, ex.getMessage());
             }
