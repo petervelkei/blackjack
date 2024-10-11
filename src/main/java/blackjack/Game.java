@@ -130,7 +130,6 @@ public class Game {
             dealerDrawCard();
         }
     
-    
         if (player.isPush(dealer)) {
             ui.showEndGameMessage("Push!");
         } else if (player.isBusted() || (!dealer.isBusted() && dealer.hasBetterHandThan(player)) || (dealer.hasBlackjack() && !player.hasBlackjack())) {
@@ -139,6 +138,7 @@ public class Game {
             ui.showEndGameMessage("Player wins!");
         }
     }
+    
 
     /**
      * Kiszámítja a megadott kéz összértékét.

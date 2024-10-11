@@ -28,6 +28,17 @@ public class Player {
         hand.add(card);
     }
 
+
+    /**
+     * Hozzáad egy kártyát a játékos kezéhez.
+     * 
+     * @param card A hozzáadni kívánt kártya.
+     * @param hand A játékos keze.
+     */
+    public void addCard(Card card, List<Card> hand) {
+        hand.add(card);
+    }
+
     /**
      * Visszaadja a játékos kezében lévő kártyák listáját.
      * 
@@ -52,6 +63,7 @@ public class Player {
     public void addHand(List<Card> cards) {
         hand.addAll(cards);
     }
+
 
     /**
      * Visszaadja a játékos kezének összértékét.
@@ -109,7 +121,7 @@ public class Player {
     public boolean hasBlackjack() {
         return getHandValue() == 21 && hand.size() == 2;
     }
-    
+
 
     /**
      * Ellenőrzi, hogy a játékos keze megegyezik-e egy másik játékos kezével.

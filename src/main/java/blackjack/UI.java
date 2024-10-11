@@ -141,7 +141,7 @@ public class UI {
         splitButton.addActionListener(e -> {
             try {
                 game.split();
-                balance.addBet(balance.getCurrentBet());
+                balance.doubleBet();
                 updateUI();
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(frame, ex.getMessage());
