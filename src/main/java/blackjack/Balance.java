@@ -30,17 +30,7 @@ public class Balance {
         return totalBalance;
     }
 
-
-    public void doubleBet() {
-        int totalBet = currentBet * 2;
-        if (totalBalance >= totalBet) {
-            totalBalance -= currentBet;
-            currentBet *= 2;
-        } else {
-            throw new IllegalArgumentException("Insufficient balance to double the bet.");
-        }
-    }
-
+    
     /**
      * Visszaadja a játékos jelenlegi fogadásának összegét.
      * 
