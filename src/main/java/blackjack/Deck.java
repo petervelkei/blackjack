@@ -1,76 +1,66 @@
 package blackjack;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+
+import javax.imageio.ImageIO;
 
 /**
- * A Deck osztály, amely a kártyapaklit reprezentálja.
  * 
- * Ez az osztály tartalmazza a kártyapaklit, és biztosítja a kártyák inicializálását,
- * keverését, húzását és visszaállítását.
+ * Ez az osztály a kártyapaklit reprezentálja, amely keverhető és amelyből kártyákat lehet húzni.
  */
 public class Deck {
-    private final List<Card> cards;
 
+    private ArrayList<Card> cardStorage = new ArrayList<>();
+    private ArrayList<Card> shuffledDeck = new ArrayList<>();
+    
     /**
-     * Létrehoz egy új Deck objektumot, és inicializálja a kártyapaklit.
+     * 
+     * Létrehoz egy új Deck objektumot, amely tárolja az 52 különböző kártyát sorrendben.
      */
     public Deck() {
-        cards = new ArrayList<>();
-        initializeDeck();
-    }
-
-    /**
-     * Inicializálja a kártyapaklit a szokásos 52 kártyával.
-     * 
-     * Ez a metódus létrehozza a kártyákat a négy szín (hearts, diamonds, clubs, spades)
-     * és a tizenhárom rang (2-10, jack, queen, king, ace) kombinációjával, majd
-     * hozzáadja őket a paklihoz. A kártyák képeinek elérési útját is beállítja.
-     * Végül megkeveri a kártyákat.
-     */
-    private void initializeDeck() {
-        String[] suits = {"hearts", "diamonds", "clubs", "spades"};
-        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"};
-
-        for (String suit : suits) {
-            for (String rank : ranks) {
-                String imagePath = "cards/" + rank + "_of_" + suit + ".png";
-                cards.add(new Card(suit, rank, imagePath));
+        for (Rank r : Rank.values()) {
+            for (Suit s : Suit.values()) {
+                try {
+                    String fileName = "src/resources/cards/" + r.name().toLowerCase() + "_of_" + s.name().toLowerCase() + ".png";
+                    File file = new File(fileName);
+                    if (!file.exists()) {
+                        throw new IOException("File not found: " + fileName);
+                    }
+                    Image temp = ImageIO.read(file);
+                    cardStorage.add(new Card(r, s, temp));
+                } catch (IOException ex) {
+                    System.out.println("You seem to miss the card files: " + ex.getMessage());
+                    System.exit(154);
+                }
             }
         }
-        shuffleCards();
     }
 
     /**
-     * Megkeveri a kártyapaklit.
      * 
-     * Ez a metódus véletlenszerű sorrendbe rendezi a kártyákat a pakliban.
+     * A kártyatárolót használja egy új, 52 kártyából álló pakli megkeveréséhez.
      */
-    private void shuffleCards() {
-        Collections.shuffle(cards);
-    }
-
-
-    /**
-     * Húz egy kártyát a kártyapakli tetejéről.
-     * 
-     * Ez a metódus eltávolítja és visszaadja a kártyapakli utolsó kártyáját.
-     * 
-     * @return A kártyapakli utolsó kártyája.
-     */
-    public Card draw() {
-        return cards.remove(cards.size() - 1);
+    public void shuffle() {
+        shuffledDeck = new ArrayList<>(cardStorage);
+        Collections.shuffle(shuffledDeck);
     }
 
     /**
-     * Visszaállítja a kártyapaklit az eredeti állapotába.
      * 
-     * Ez a metódus törli a jelenlegi kártyákat a pakliból, majd újra inicializálja
-     * a kártyapaklit a szokásos 52 kártyával és megkeveri őket.
+     * Visszaadja a pakli első kártyáját.
+     * Ha a pakli üres (minden kártyát kihúztak vagy a Deck objektumot éppen most hozták létre),
+     * a shuffle() metódust használja a feltöltéshez.
+     * 
+     * @return first Card of the deck
      */
-    public void reset() {
-        cards.clear();
-        initializeDeck();
+    public Card drawCard() {
+        if (shuffledDeck.isEmpty()) {
+            shuffle();
+        }
+        return shuffledDeck.remove(0);
     }
 }

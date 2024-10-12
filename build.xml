@@ -4,7 +4,7 @@
 
     <!-- Define properties -->
     <property name="src.dir" value="src/main/java"/>
-    <property name="resources.dir" value="src/main/resources"/>
+    <property name="cards.dir" value="src/resources/cards"/>
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
     <property name="main.class" value="blackjack.Main"/>
@@ -21,8 +21,8 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}">
             <exclude name="**/test/**"/>
         </javac>
-        <copy todir="${build.dir}">
-            <fileset dir="${resources.dir}"/>
+        <copy todir="${build.dir}/cards">
+            <fileset dir="${cards.dir}"/>
         </copy>
     </target>
 

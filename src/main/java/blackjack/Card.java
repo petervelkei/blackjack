@@ -1,53 +1,62 @@
 package blackjack;
 
+import java.awt.Image;
+
 /**
- * A Card osztály, amely egy kártyát reprezentál a Blackjack játékban.
- * 
- * Ez az osztály tartalmazza a kártya színét, rangját és a kép elérési útját.
- * Biztosítja a kártya attribútumainak lekérdezésére szolgáló metódusokat.
+ * Egy osztály, amely egy játékkártyát reprezentál ranggal, színnel és képpel.
  */
 public class Card {
-    private final String suit;
-    private final String rank;
-    private final String imagePath;
+    private final Rank rank; // A kártya rangja (pl. Ász, 2, 3, ..., Király)
+    private final Suit suit; // A kártya színe (pl. Treff, Káró, Kőr, Pikk)
+    private final Image image; // A kártyát ábrázoló kép
 
     /**
-     * Létrehoz egy új Card objektumot a megadott színnel, ranggal és kép elérési úttal.
-     * 
-     * @param suit A kártya színe (pl. hearts, diamonds, clubs, spades).
-     * @param rank A kártya rangja (pl. 2, 3, 4, ..., 10, jack, queen, king, ace).
-     * @param imagePath A kártya képének elérési útja.
+     * Létrehoz egy kártyát a megadott ranggal, színnel és képpel.
+     *
+     * @param r   A kártya rangja
+     * @param s   A kártya színe
+     * @param img A kártya képe
      */
-    public Card(String suit, String rank, String imagePath) {
-        this.suit = suit;
-        this.rank = rank;
-        this.imagePath = imagePath;
+    public Card(Rank r, Suit s, Image img) {
+        this.rank = r;
+        this.suit = s;
+        this.image = img;
     }
 
     /**
-     * Visszaadja a kártya színét.
-     * 
-     * @return A kártya színe.
+     * Visszaadja a kártya színét sztringként.
+     *
+     * @return A kártya színe
      */
     public String getSuit() {
-        return suit;
+        return suit.name();
     }
 
     /**
-     * Visszaadja a kártya rangját.
-     * 
-     * @return A kártya rangja.
+     * Visszaadja a kártya rangját egész számként.
+     *
+     * @return A kártya rangja
      */
-    public String getRank() {
-        return rank;
+    public int getRank() {
+        return rank.value;
     }
 
     /**
-     * Visszaadja a kártya képének elérési útját.
-     * 
-     * @return A kártya képének elérési útja.
+     * Visszaadja a kártya képét.
+     *
+     * @return A kártya képe
      */
-    public String getImagePath() {
-        return imagePath;
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * Visszaadja a kártya sztring reprezentációját a "rank_of_suit.png" formátumban.
+     *
+     * @return A kártya sztring reprezentációja
+     */
+    @Override
+    public String toString() {
+        return rank + "_of_" + suit + ".png";
     }
 }

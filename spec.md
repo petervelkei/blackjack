@@ -7,12 +7,8 @@ A feladat egy egyszerű Blackjack játék megvalósítása Java nyelven, amely g
 ## Use-case-ek
 
 1. **Játék indítása**
-   - A felhasználó elindítja az alkalmazást, és megjelenik a főmenü.
-   - A felhasználó a "Start Game" gombra kattintva elindítja a játékot.
-
-2. **Fogadás elhelyezése**
-   - A felhasználó a főmenüben kiválasztja a fogadni kívánt összeget a chip gombok segítségével.
-   - A felhasználó a "Start Game" gombra kattintva elindítja a játékot a kiválasztott fogadással.
+   - A felhasználó elindítja az alkalmazást, és megjelenik a főképernyő.
+   - A felhasználó a tét megadása után a "Deal" gombra kattintva elindítja a játékot.
 
 3. **Kártya húzása (Hit)**
    - A játék során a felhasználó a "Hit" gombra kattintva húz egy új kártyát.
@@ -30,17 +26,9 @@ A feladat egy egyszerű Blackjack játék megvalósítása Java nyelven, amely g
    - Ha a játékos két azonos értékű kártyát kap, a "Split" gombra kattintva két külön kézre oszthatja a kártyáit.
    - A játék frissíti a játékos kártyáit és pontszámát mindkét kézre.
 
-7. **Játék újraindítása**
-   - A játék végén a felhasználó a "Reset Game" gombra kattintva újraindíthatja a játékot.
-   - A játék visszaállítja az eredeti állapotot és új játékot kezd.
-
-8. **Visszatérés a főmenübe**
-   - A játék során a felhasználó a "Back to Menu" gombra kattintva visszatérhet a főmenübe.
-   - A játék visszaállítja az eredeti állapotot és visszatér a főmenübe.
-
 ## Megoldási ötlet vázlatos ismertetése
 
-A játék megvalósítása Java nyelven történik, a grafikus felhasználói felületet a Swing könyvtár segítségével hozzuk létre. Az alkalmazás MVC (Model-View-Controller) architektúrát követ, ahol a `Game` osztály a játék logikáját, a `UI` osztály a felhasználói felületet, és a `Balance` osztály a játékos egyenlegét kezeli.
+A játék megvalósítása Java nyelven történik, a grafikus felhasználói felületet a Swing könyvtár segítségével hozzuk létre. Az alkalmazás MVC (Model-View-Controller) architektúrát követ, ahol a `Dealer` osztály az osztó logikáját, a `GameUI` osztály a felhasználói felületet, és a `CoinPurse` osztály a játékos egyenlegét kezeli.
 
 - **Technológiai megoldások:**
   - Java nyelv
@@ -52,14 +40,18 @@ A játék megvalósítása Java nyelven történik, a grafikus felhasználói fe
   - A játék állapotát és a játékos egyenlegét a memóriában tároljuk, nem használunk külső fájlokat vagy adatbázisokat.
 
 - **Főbb osztályok:**
-  - `Game`: A játék logikáját kezeli, beleértve a kártyák húzását, a játék végének ellenőrzését és a játék újraindítását.
-  - `UI`: A grafikus felhasználói felületet kezeli, beleértve a gombok és panelek létrehozását és frissítését.
-  - `Balance`: A játékos egyenlegét és fogadásait kezeli.
+  - `Card`: A kártyák reprezentációja, beleértve a rangot és a színt.
+  - `CoinPurse`: A játékos egyenlegét és fogadásait kezeli.
+  - `Dealer`: Az osztó logikáját kezeli, beleértve a kártyák húzását és a játék végének ellenőrzését.
+  - `Deck`: A kártyapaklit kezeli, beleértve a kártyák keverését és húzását.
+  - `GameUI`: A grafikus felhasználói felületet kezeli, beleértve a gombok és panelek létrehozását és frissítését.
+  - `Hand`: A játékos és az osztó kezét kezeli, beleértve a kártyák hozzáadását és az értékek számítását.
+  - `Main`: Az alkalmazás belépési pontja, amely elindítja a játékot.
+  - `Rank`: A kártyák rangjait definiálja.
+  - `Suit`: A kártyák színeit definiálja.
 
 - **Főbb funkciók:**
   - Kártyák húzása és megjelenítése
   - Fogadások kezelése és frissítése
   - Játék állapotának frissítése és megjelenítése
   - Játék végének kezelése és üzenetek megjelenítése
-
-A specifikáció alapján a játék könnyen bővíthető és karbantartható, mivel az MVC architektúra lehetővé teszi a különböző komponensek elkülönítését és független fejlesztését.
