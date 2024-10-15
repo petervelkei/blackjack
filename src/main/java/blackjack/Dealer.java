@@ -82,7 +82,7 @@ public class Dealer implements ActionListener {
                 setEnableSplitHand(false);
                 gameOver = false;
             }
-            case "dealer" -> declareWinner();
+            case GameUI.DEALER -> declareWinner();
             case GameUI.PLAYER -> {
                 if (splitHand != null && splitHand.getValue() <= 21) {
                     GameUI.stayButton.doClick();
@@ -220,8 +220,8 @@ public class Dealer implements ActionListener {
      */
     public void dealPressed() {
         ui.clear();
-        playerHand = new Hand("player");
-        dealerHand = new Hand("dealer");
+        playerHand = new Hand(GameUI.PLAYER);
+        dealerHand = new Hand(GameUI.DEALER);
         splitHand = null;
         dealCard(dealerHand);
         dealCard(dealerHand);
@@ -322,7 +322,6 @@ public class Dealer implements ActionListener {
         ui.setEnableButton(command);
     }
 
-    
 
     /**
      * Visszaadja a játékos kezét.
