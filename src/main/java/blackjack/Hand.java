@@ -1,6 +1,7 @@
 package blackjack;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Ez az osztály egyetlen kezet reprezentál a blackjack játékban.
@@ -8,51 +9,21 @@ import java.util.ArrayList;
  * @autor Wampie
  */
 public class Hand {
-
-    /**
-     * A kártyák listája, amelyeket a kézhez osztottak.
-     */
-    private final ArrayList<Card> cards;
-    
-    /**
-     * A kéz értéke a BlackJack szabályai szerint.
-     */
-    private int value = 0;
-    
-    /**
-     * Ha a kéz ászt tartalmaz, a BlackJack-ben két értéke lehet, ezt a változó kezeli.
-     */
-    private int acedValue = 0;
-    
-    /**
-     * A pénzösszeg, amit a játékos a kézre tett.
-     */
-    private int bet = 0;
-    
-    /**
-     * Mivel az ász lehet 1 vagy 11 a BlackJack-ben, tudnunk kell, hogy a kéz tartalmaz-e egyet.
-     */
-    private boolean hasAce = false;
-    
-    /**
-     * A legtöbb BlackJack szabály szerint egy osztás során csak egyszer lehet osztani.
-     * Ha a kezet egyszer már osztották, nem lehet újra osztani.
-     */
-    private boolean isSplitted = false;
-    
-    /**
-     * A BlackJack-ben a kéz tartozhat a játékoshoz vagy az osztóhoz, ebben a programban különbséget teszünk a játékos és az osztott kéz között is.
-     */
-    private final String owner;
+    private final List<Card> kartyak = new LinkedList<>();
+    private boolean asz = false;
+    private boolean splittelt = false;
+    private int fogadas = 0;
+    private int ertek = 0;
+    private int aszErtek = 0;
+    private final String felhasznalo;
 
     /**
      * Létrehoz egy új Hand objektumot és megadja a tulajdonost.
      * 
-     * @param owner A kéz tulajdonosa
+     * @param felhasznalo A kéz tulajdonosa
      */
-    public Hand(String owner) {
-        cards = new ArrayList<>();
-        this.owner = owner;
+    public Hand(String f) {
+        felhasznalo = f;
     }
 
     /**
@@ -61,15 +32,14 @@ public class Hand {
      * @param c A kézhez osztott kártya
      */
     public void addCard(Card c) {
-        if (c == null) {
-            return;
-        }
-        cards.add(c);
-        value += c.getRank();
-        acedValue += c.getRank();
-        if (c.getRank() == 1 && !hasAce) {
-            hasAce = true;
-            acedValue = value + 10;
+        if (c != null) {
+            kartyak.add(c);
+            ertek += c.getRank();
+            aszErtek += c.getRank();
+            if (c.getRank() == 1 && !asz) {
+                asz = true;
+                aszErtek = ertek + 10;
+            }
         }
     }
 
@@ -79,10 +49,7 @@ public class Hand {
      * @return true, ha a kéz BlackJack-et tartalmaz
      */
     public boolean blackJack() {
-        if (!hasAce || cards.size() != 2) {
-            return false;
-        }
-        return acedValue == 21;
+        return asz && kartyak.size() == 2 && aszErtek == 21;
     }
 
     /**
@@ -91,8 +58,8 @@ public class Hand {
      * 
      * @return true, ha a kéz párokat tartalmaz az első két kártyával.
      */
-    public boolean isSplittable() {
-        return owner.equalsIgnoreCase("player") && cards.size() == 2 && cards.get(0).getRank() == cards.get(1).getRank() && !isSplitted;
+    public boolean splittelheto() {
+        return felhasznalo.equalsIgnoreCase("player") && kartyak.size() == 2 && kartyak.get(0).getRank() == kartyak.get(1).getRank() && !splittelt;
     }
 
     /**
@@ -102,15 +69,14 @@ public class Hand {
      * @return Az osztott kéz
      */
     public Hand split() {
-        if (!isSplittable()) {
-            return null;
-        } else {
-            Hand split = new Hand("split");
-            split.addCard(cards.remove(1));
-            value = cards.get(0).getRank();
-            isSplitted = true;
-            return split;
+        if (splittelheto()) {
+            Hand s = new Hand("split");
+            s.addCard(kartyak.remove(1));
+            ertek = kartyak.get(0).getRank();
+            splittelt = true;
+            return s;
         }
+        return null;
     }
 
     /**
@@ -119,11 +85,8 @@ public class Hand {
      * 
      * @return A kéz értéke, amikor az Ász 11-nek számít
      */
-    public int getAcedValue() {
-        if (acedValue > 21) {
-            return 0;
-        }
-        return acedValue;
+    public int getaszErtek() {
+        return aszErtek > 21 ? 0 : aszErtek;
     }
 
     /**
@@ -131,18 +94,18 @@ public class Hand {
      * 
      * @param b A megadott tét
      */
-    public void addBet(int b) {
-        this.bet += b < 10 ? 10 : b;
+    public void placeBet(int b) {
+        fogadas += Math.max(b, 10);
     }
 
     /**
      * Visszaadja a megadott indexhez osztott kártyát.
      * 
-     * @param index A kívánt kártya indexe
+     * @param i A kívánt kártya indexe
      * @return A megadott indexhez tartozó kártya
      */
-    public Card getCard(int index) {
-        return cards.get(index);
+    public Card getKartya(int i) {
+        return kartyak.get(i);
     }
 
     /**
@@ -150,8 +113,8 @@ public class Hand {
      * 
      * @return A kéz értéke
      */
-    public int getValue() {
-        return value;
+    public int getErtek() {
+        return ertek;
     }
 
     /**
@@ -159,8 +122,8 @@ public class Hand {
      * 
      * @return A tulajdonos
      */
-    public String getOwner() {
-        return owner;
+    public String getFelhasznalo() {
+        return felhasznalo;
     }
 
     /**
@@ -168,8 +131,8 @@ public class Hand {
      * 
      * @return true, ha a kéz Ászt tartalmaz
      */
-    public boolean hasAce() {
-        return hasAce;
+    public boolean VanAsza() {
+        return asz;
     }
 
     /**
@@ -177,8 +140,8 @@ public class Hand {
      * 
      * @return A kézre tett tét összege
      */
-    public int getBet() {
-        return bet;
+    public int getFogadas() {
+        return fogadas;
     }
 
     /**
@@ -186,7 +149,7 @@ public class Hand {
      * 
      * @return A kéz mérete
      */
-    public int getSize() {
-        return cards.size();
+    public int getKartyakMeret() {
+        return kartyak.size();
     }
 }

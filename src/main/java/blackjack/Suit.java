@@ -10,25 +10,21 @@ package blackjack;
  * - HEARTS (Kőr)
  * - DIAMONDS (Káró)
  * 
- * @author Wampie
  */
 public enum Suit {
-    CLUBS('\u2663', 'c'),    // Treff: ♣, c
-    SPADES('\u2660', 's'),   // Pikk: ♠, s
-    HEARTS('\u2665', 'h'),   // Kőr: ♥, h
-    DIAMONDS('\u2666', 'd'); // Káró: ♦, d
+    CLUBS( 'c'),
+    SPADES( 's'),
+    HEARTS( 'h'),
+    DIAMONDS( 'd');
 
-    public final char symbol; // A kártyaszín szimbóluma
-    public final char letter; // A kártyaszín betűjele
+    public final char l; // A kártyaszín szimbóluma
 
     /**
      * Konstruktor, amely beállítja a kártyaszín szimbólumát és betűjelét.
      * 
-     * @param c A kártyaszín szimbóluma
      * @param l A kártyaszín betűjele
      */
-    Suit(char c, char l) {
-        symbol = c;
-        letter = l;
+    Suit(char l) {
+        this.l = l;
     }
 }

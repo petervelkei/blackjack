@@ -6,9 +6,9 @@ import java.awt.Image;
  * Egy osztály, amely egy játékkártyát reprezentál ranggal, színnel és képpel.
  */
 public class Card {
-    private final Rank rank; // A kártya rangja (pl. Ász, 2, 3, ..., Király)
-    private final Suit suit; // A kártya színe (pl. Treff, Káró, Kőr, Pikk)
-    private final Image image; // A kártyát ábrázoló kép
+    private final Rank r; // A kártya rangja (pl. Ász, 2, 3, ..., Király)
+    private final Suit s; // A kártya színe (pl. Treff, Káró, Kőr, Pikk)
+    private final Image i; // A kártyát ábrázoló kép
 
     /**
      * Létrehoz egy kártyát a megadott ranggal, színnel és képpel.
@@ -17,10 +17,10 @@ public class Card {
      * @param s   A kártya színe
      * @param img A kártya képe
      */
-    public Card(Rank r, Suit s, Image img) {
-        this.rank = r;
-        this.suit = s;
-        this.image = img;
+    public Card(Rank r, Suit s, Image i) {
+        this.r = r;
+        this.s = s;
+        this.i = i;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Card {
      * @return A kártya színe
      */
     public String getSuit() {
-        return suit.name();
+        return s.name();
     }
 
     /**
@@ -38,7 +38,7 @@ public class Card {
      * @return A kártya rangja
      */
     public int getRank() {
-        return rank.value;
+        return r.v;
     }
 
     /**
@@ -46,8 +46,8 @@ public class Card {
      *
      * @return A kártya képe
      */
-    public Image getImage() {
-        return image;
+    public Image getKep() {
+        return i;
     }
 
     /**
@@ -57,6 +57,6 @@ public class Card {
      */
     @Override
     public String toString() {
-        return rank + "_of_" + suit + ".png";
+        return r + "_of_" + s + ".png";
     }
 }

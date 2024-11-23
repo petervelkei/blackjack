@@ -11,9 +11,9 @@ public class Main {
      * 
      * Ez a metódus létrehoz egy új Dealer objektumot, hogy elindítsa a Blackjack játékot.
      * 
-     * @param args A parancssori argumentumok tömbje.
      */
     public static void main(String[] args) {
-        Dealer game = new Dealer();
+        Dealer g = new Dealer();
+        g.play();
     }
 }

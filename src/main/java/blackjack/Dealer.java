@@ -8,22 +8,19 @@ import java.awt.event.ActionListener;
  */
 public class Dealer implements ActionListener {
 
-    private final Deck deck; // A pakli kártyák
-    private final GameUI ui; // A játék felhasználói felülete
-    private Hand playerHand; // A játékos keze
-    private Hand dealerHand; // Az osztó keze
-    private Hand splitHand; // A megosztott kéz
-    private final CoinPurse playerPurse; // A játékos pénztárcája
-    private boolean playingSplitHand; // Jelzi, hogy a játékos a megosztott kézzel játszik-e
+    private Deck asztal; // A pakli kártyák
+    private GameUI screen; // A játék felhasználói felülete
+    private Hand jatekosKez; // A játékos keze
+    private Hand osztoKez; // Az osztó keze
+    private Hand jatekosOsztottKez; // A megosztott kéz
+    private CoinPurse jatekosEgyenleg; // A játékos pénztárcája
+    private boolean osztottKez; // Jelzi, hogy a játékos a megosztott kézzel játszik-e
 
-    /**
-     * Konstruktor, amely inicializálja a paklit, a felhasználói felületet és a játékos pénztárcáját.
-     */
-    public Dealer() {
-        deck = new Deck();
-        ui = new GameUI(this);
-        playerPurse = new CoinPurse(2000);
-        GameUI.betslider.addChangeListener(playerPurse);
+    public void play() {
+        asztal = new Deck();
+        screen = new GameUI(this);
+        jatekosEgyenleg = new CoinPurse(2000);
+        GameUI.csuszka.addChangeListener(jatekosEgyenleg);
     }
 
     /**
@@ -32,14 +29,14 @@ public class Dealer implements ActionListener {
      * @param hand A frissítendő kéz
      */
     private void updateHandValue(Hand hand) {
-        String update = hand.getValue() + "";
-        if (hand.hasAce() && hand.getAcedValue() > 0) {
-            update += "/" + hand.getAcedValue();
+        String update = hand.getErtek() + "";
+        if (hand.VanAsza() && hand.getaszErtek() > 0) {
+            update += "/" + hand.getaszErtek();
         }
         if (hand.blackJack()) {
             update = "BLACKJACK!";
         }
-        ui.updateHandValue(hand.getOwner(), update);
+        screen.updateKezErtek(hand.getFelhasznalo(), update);
     }
 
     /**
@@ -48,8 +45,8 @@ public class Dealer implements ActionListener {
      * @param target A cél kéz, amelyhez a kártyát ki kell osztani
      */
     private void dealCard(Hand target) {
-        Card temp = deck.drawCard();
-        ui.drawCard(temp, target.getOwner());
+        Card temp = asztal.draw();
+        screen.kartyaHuzasUI(temp, target.getFelhasznalo());
         target.addCard(temp);
     }
 
@@ -60,11 +57,11 @@ public class Dealer implements ActionListener {
      * @return true, ha a kéz értéke meghaladja a 21-et, különben false
      */
     private boolean checkBust(Hand hand) {
-        if (hand.getValue() <= 21) {
+        if (hand.getErtek() <= 21) {
             return false;
         }
         if (gameoverBust(hand)) {
-            ui.setEnableButton("bust");
+            screen.gombokatEngedelyez("bust");
         }
         return true;
     }
@@ -77,21 +74,21 @@ public class Dealer implements ActionListener {
      */
     public boolean gameoverBust(Hand hand) {
         boolean gameOver = true;
-        switch (hand.getOwner()) {
+        switch (hand.getFelhasznalo()) {
             case GameUI.SPLIT -> {
-                setEnableSplitHand(false);
+                setEnablejatekosOsztottKez(false);
                 gameOver = false;
             }
             case GameUI.DEALER -> declareWinner();
             case GameUI.PLAYER -> {
-                if (splitHand != null && splitHand.getValue() <= 21) {
-                    GameUI.stayButton.doClick();
+                if (jatekosOsztottKez != null && jatekosOsztottKez.getErtek() <= 21) {
+                    GameUI.stay.doClick();
                     gameOver = false;
                     break;
                 }
-                ui.gameOver("PLAYER BUSTS");
+                screen.vege("PLAYER BUSTS");
             }
-            default -> throw new IllegalStateException("Unexpected value: " + hand.getOwner());
+            default -> throw new IllegalStateException("Unexpected value: " + hand.getFelhasznalo());
         }
         return gameOver;
     }
@@ -101,14 +98,14 @@ public class Dealer implements ActionListener {
      *
      * @param enable true, ha engedélyezni kell a megosztott kéz használatát, különben false
      */
-    private void setEnableSplitHand(boolean enable) {
-        playingSplitHand = enable;
+    private void setEnablejatekosOsztottKez(boolean enable) {
+        osztottKez = enable;
         if (enable) {
-            ui.enableHand(GameUI.SPLIT);
-            ui.disableHand(GameUI.PLAYER);
+            screen.kezEngedelyez(GameUI.SPLIT);
+            screen.kezTiltas(GameUI.PLAYER);
         } else {
-            ui.enableHand(GameUI.PLAYER);
-            ui.disableHand(GameUI.SPLIT);
+            screen.kezEngedelyez(GameUI.PLAYER);
+            screen.kezTiltas(GameUI.SPLIT);
         }
     }
 
@@ -118,11 +115,11 @@ public class Dealer implements ActionListener {
      * @param hand A megduplázandó kéz
      */
     public void doubleHand(Hand hand) {
-        hand.addBet(playerPurse.bet());
+        hand.placeBet(jatekosEgyenleg.bet());
         dealCard(hand);
         checkBust(hand);
         updateHandValue(hand);
-        GameUI.stayButton.doClick();
+        GameUI.stay.doClick();
     }
 
     /**
@@ -131,8 +128,8 @@ public class Dealer implements ActionListener {
      * @param amount A kifizetendő összeg
      */
     private void payWinnings(int amount) {
-        playerPurse.addMoney(amount);
-        ui.updateBets(playerPurse.getBalance(), playerHand.getBet());
+        jatekosEgyenleg.deposit(amount);
+        screen.tetFrissites(jatekosEgyenleg.getBalance(), jatekosKez.getFogadas());
     }
 
     /**
@@ -144,25 +141,25 @@ public class Dealer implements ActionListener {
      */
     public void declareSplitWinnings(int dealer, int player, int split) {
         int winnings = 0;
-        if (playerHand.blackJack()) {
-            winnings += playerHand.getBet() + (playerHand.getBet() * 3) / 2;
+        if (jatekosKez.blackJack()) {
+            winnings += jatekosKez.getFogadas() + (jatekosKez.getFogadas() * 3) / 2;
         } else if (player > dealer) {
-            winnings += playerHand.getBet() * 2;
+            winnings += jatekosKez.getFogadas() * 2;
         } else if (player == dealer) {
-            winnings += playerHand.getBet();
+            winnings += jatekosKez.getFogadas();
         }
-        if (splitHand.blackJack()) {
-            winnings += splitHand.getBet() + (splitHand.getBet() * 3) / 2;
+        if (jatekosOsztottKez.blackJack()) {
+            winnings += jatekosOsztottKez.getFogadas() + (jatekosOsztottKez.getFogadas() * 3) / 2;
         } else if (split > dealer) {
-            winnings += splitHand.getBet() * 2;
+            winnings += jatekosOsztottKez.getFogadas() * 2;
         } else if (split == dealer) {
-            winnings += splitHand.getBet();
+            winnings += jatekosOsztottKez.getFogadas();
         }
         if (winnings > 0) {
             payWinnings(winnings);
-            ui.gameOver("YOU WON " + winnings + "€");
+            screen.vege("YOU WON " + winnings + "€");
         } else {
-            ui.gameOver("DEALER WINS!");
+            screen.vege("DEALER WINS!");
         }
     }
 
@@ -170,26 +167,26 @@ public class Dealer implements ActionListener {
      * Meghatározza a győztest a játék végén.
      */
     public void declareWinner() {
-        int dealer = Math.max(dealerHand.getAcedValue(), dealerHand.getValue());
-        int player = Math.max(playerHand.getValue(), playerHand.getAcedValue());
+        int dealer = Math.max(osztoKez.getaszErtek(), osztoKez.getErtek());
+        int player = Math.max(jatekosKez.getErtek(), jatekosKez.getaszErtek());
         int split;
         dealer = dealer > 21 ? 0 : dealer;
         player = player > 21 ? 0 : player;
 
-        if (splitHand != null) {
-            split = Math.max(splitHand.getValue(), splitHand.getAcedValue());
+        if (jatekosOsztottKez != null) {
+            split = Math.max(jatekosOsztottKez.getErtek(), jatekosOsztottKez.getaszErtek());
             split = split > 21 ? 0 : split;
             declareSplitWinnings(dealer, player, split);
             return;
         }
         if (dealer > player) {
-            ui.gameOver("DEALER WINS");
+            screen.vege("DEALER WINS");
         } else if (dealer == player) {
-            ui.gameOver("GAME IS SPLIT");
-            payWinnings((playerHand.getBet()));
+            screen.vege("GAME IS SPLIT");
+            payWinnings((jatekosKez.getFogadas()));
         } else {
-            ui.gameOver("YOU WIN " + (playerHand.getBet() * 2) + "€");
-            payWinnings((playerHand.getBet() * 2));
+            screen.vege("YOU WIN " + (jatekosKez.getFogadas() * 2) + "€");
+            payWinnings((jatekosKez.getFogadas() * 2));
         }
     }
 
@@ -199,19 +196,19 @@ public class Dealer implements ActionListener {
      * @return true, ha valamelyik kapott BlackJack-et, különben false
      */
     public boolean checkBlackJack() {
-        if (playerHand.blackJack() && dealerHand.blackJack()) {
-            ui.gameOver("GAME IS SPLIT");
-            payWinnings((playerHand.getBet()));
-        } else if (dealerHand.blackJack()) {
-            ui.gameOver("DEALER WINS");
-        } else if (playerHand.blackJack()) {
-            ui.gameOver("YOU WIN " + (playerHand.getBet() + (playerHand.getBet() * 3) / 2) + "€");
-            payWinnings(playerHand.getBet() + (playerHand.getBet() * 3) / 2);
+        if (jatekosKez.blackJack() && osztoKez.blackJack()) {
+            screen.vege("GAME IS SPLIT");
+            payWinnings((jatekosKez.getFogadas()));
+        } else if (osztoKez.blackJack()) {
+            screen.vege("DEALER WINS");
+        } else if (jatekosKez.blackJack()) {
+            screen.vege("YOU WIN " + (jatekosKez.getFogadas() + (jatekosKez.getFogadas() * 3) / 2) + "€");
+            payWinnings(jatekosKez.getFogadas() + (jatekosKez.getFogadas() * 3) / 2);
         } else {
             return false;
         }
-        ui.revealDealerCard();
-        updateHandValue(dealerHand);
+        screen.felfedRejtettKartya();
+        updateHandValue(osztoKez);
         return true;
     }
 
@@ -219,17 +216,17 @@ public class Dealer implements ActionListener {
      * Kezeli a "deal" gomb megnyomását.
      */
     public void dealPressed() {
-        ui.clear();
-        playerHand = new Hand(GameUI.PLAYER);
-        dealerHand = new Hand(GameUI.DEALER);
-        splitHand = null;
-        dealCard(dealerHand);
-        dealCard(dealerHand);
-        dealCard(playerHand);
-        dealCard(playerHand);
-        playerHand.addBet(playerPurse.bet());
-        updateHandValue(playerHand);
-        ui.updateBets(playerPurse.getBalance(), playerHand.getBet());
+        screen.torol();
+        jatekosKez = new Hand(GameUI.PLAYER);
+        osztoKez = new Hand(GameUI.DEALER);
+        jatekosOsztottKez = null;
+        dealCard(osztoKez);
+        dealCard(osztoKez);
+        dealCard(jatekosKez);
+        dealCard(jatekosKez);
+        jatekosKez.placeBet(jatekosEgyenleg.bet());
+        updateHandValue(jatekosKez);
+        screen.tetFrissites(jatekosEgyenleg.getBalance(), jatekosKez.getFogadas());
     }
 
     /**
@@ -237,10 +234,10 @@ public class Dealer implements ActionListener {
      */
     public void hitPressed() {
         Hand temp;
-        if (playingSplitHand) {
-            temp = splitHand;
+        if (osztottKez) {
+            temp = jatekosOsztottKez;
         } else {
-            temp = playerHand;
+            temp = jatekosKez;
         }
         dealCard(temp);
         checkBust(temp);
@@ -251,13 +248,13 @@ public class Dealer implements ActionListener {
      * Kezeli a "stay" gomb megnyomását.
      */
     public void stayPressed() {
-        ui.enableHand(GameUI.SPLIT);
-        ui.revealDealerCard();
-        while (dealerHand.getValue() < 17) {
-            dealCard(dealerHand);
+        screen.kezEngedelyez(GameUI.SPLIT);
+        screen.felfedRejtettKartya();
+        while (osztoKez.getErtek() < 17) {
+            dealCard(osztoKez);
         }
-        updateHandValue(dealerHand);
-        if (!checkBust(dealerHand)) {
+        updateHandValue(osztoKez);
+        if (!checkBust(osztoKez)) {
             declareWinner();
         }
     }
@@ -266,20 +263,20 @@ public class Dealer implements ActionListener {
      * Kezeli a "split" gomb megnyomását.
      */
     public void splitPressed() {
-        ui.clearPlayer();
-        splitHand = playerHand.split();
-        splitHand.addBet(playerPurse.bet());
-        ui.drawCard(playerHand.getCard(0), GameUI.PLAYER);
-        ui.drawCard(splitHand.getCard(0), GameUI.SPLIT);
-        dealCard(playerHand);
-        dealCard(splitHand);
-        setEnableSplitHand(true);
-        updateHandValue(playerHand);
-        updateHandValue(splitHand);
-        if (splitHand.blackJack()) {
-            GameUI.stayButton.doClick();
-            if (playerHand.blackJack()) {
-                GameUI.stayButton.doClick();
+        screen.torolJatekos();
+        jatekosOsztottKez = jatekosKez.split();
+        jatekosOsztottKez.placeBet(jatekosEgyenleg.bet());
+        screen.kartyaHuzasUI(jatekosKez.getKartya(0), GameUI.PLAYER);
+        screen.kartyaHuzasUI(jatekosOsztottKez.getKartya(0), GameUI.SPLIT);
+        dealCard(jatekosKez);
+        dealCard(jatekosOsztottKez);
+        setEnablejatekosOsztottKez(true);
+        updateHandValue(jatekosKez);
+        updateHandValue(jatekosOsztottKez);
+        if (jatekosOsztottKez.blackJack()) {
+            GameUI.stay.doClick();
+            if (jatekosKez.blackJack()) {
+                GameUI.stay.doClick();
             }
         }
     }
@@ -294,32 +291,32 @@ public class Dealer implements ActionListener {
         String command = e.getActionCommand();
         switch (command) {
             case "deal" -> {
-                if (!playerPurse.betAcceptable()) {
-                    ui.gameOver("Choose smaller bet!");
+                if (jatekosEgyenleg.bet() == 0) {
+                    screen.vege("Choose smaller bet!");
                     return;
                 }
                 dealPressed();
                 if (checkBlackJack()) {
                     command = "bust";
                 }
-                GameUI.splitButton.setEnabled(playerHand.isSplittable());
+                GameUI.splitB.setEnabled(jatekosKez.splittelheto());
             }
             case "hit" -> hitPressed();
             case "stay" -> {
-                if (playingSplitHand) {
-                    setEnableSplitHand(false);
-                    if (playerHand.blackJack()) {
-                        GameUI.stayButton.doClick();
+                if (osztottKez) {
+                    setEnablejatekosOsztottKez(false);
+                    if (jatekosKez.blackJack()) {
+                        GameUI.stay.doClick();
                     }
                     return;
                 }
                 stayPressed();
             }
             case "split" -> splitPressed();
-            case "double" -> doubleHand(playerHand);
+            case "double" -> doubleHand(jatekosKez);
             default -> throw new IllegalStateException("Unexpected value: " + command);
         }
-        ui.setEnableButton(command);
+        screen.gombokatEngedelyez(command);
     }
 
 
@@ -329,7 +326,7 @@ public class Dealer implements ActionListener {
      * @return a játékos keze
      */
     public Hand getHand() {
-        return playerHand;
+        return jatekosKez;
     }
     
     /**
@@ -345,8 +342,8 @@ public class Dealer implements ActionListener {
      */
     public void surrender() {
         // Implementálni kell a surrender logikát
-        playerPurse.addMoney(playerHand.getBet() / 2);
-        ui.gameOver("PLAYER SURRENDERS");
+        jatekosEgyenleg.deposit(jatekosKez.getFogadas() / 2);
+        screen.vege("PLAYER SURRENDERS");
     }
     
     /**
@@ -355,7 +352,7 @@ public class Dealer implements ActionListener {
      * @return a játékos egyenlege
      */
     public int getBalance() {
-        return playerPurse.getBalance();
+        return jatekosEgyenleg.getBalance();
     }
     
     /**

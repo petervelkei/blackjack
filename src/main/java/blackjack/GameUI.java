@@ -24,12 +24,12 @@ import javax.swing.WindowConstants;
  */
 public class GameUI extends JFrame {
 
-    private transient Card hidden = null; // A rejtett kártya
-    public static final JButton hitButton = new JButton("Hit Me");
-    public static final JButton stayButton = new JButton("Stay");
-    public static final JButton dealButton = new JButton("Deal");
-    public static final JButton doubleButton = new JButton("Double");
-    public static final JButton splitButton = new JButton("Split");
+    private transient Card rejtettKartya = null; // A rejtett kártya
+    public static final JButton hit = new JButton("Hit");
+    public static final JButton stay = new JButton("Stay");
+    public static final JButton deal = new JButton("Bet");
+    public static final JButton doubleB = new JButton("Double");
+    public static final JButton splitB = new JButton("Split");
 
     public static final String SPLIT = "split";
     public static final String BET = "Bet:    ";
@@ -38,21 +38,21 @@ public class GameUI extends JFrame {
     public static final String DEALER = "dealer";
     public static final String FONT = "Courier New";
 
-    private final JLayeredPane layeredPane;
-    private final JPanel buttonPanel;
-    private final JPanel panel = new JPanel();
-    private final JPanel controls = new JPanel();
-    private final JPanel bets = new JPanel();
-    public static final JSlider betslider = new JSlider();
-    private ArrayList<JLabel> dealerHand = new ArrayList<>();
-    private ArrayList<JLabel> playerHand = new ArrayList<>();
-    private ArrayList<JLabel> splitHand = new ArrayList<>();
-    private final JLabel playerAmount = new JLabel();
-    private final JLabel dealerAmount = new JLabel();
-    private final JLabel splitAmount = new JLabel();
-    private final JLabel gameOver = new JLabel();
-    private final JLabel moneyLabel = new JLabel();
-    private final JLabel betLabel = new JLabel();
+    private final JLayeredPane layeredPanel;
+    private final JPanel buttonP;
+    private final JPanel p = new JPanel();
+    private final JPanel kiosztas = new JPanel();
+    private final JPanel fogadasPanel = new JPanel();
+    public static final JSlider csuszka = new JSlider();
+    private final ArrayList<JLabel> osztoKez = new ArrayList<>();
+    private final ArrayList<JLabel> jatekosKez = new ArrayList<>();
+    private final ArrayList<JLabel> osztottKez = new ArrayList<>();
+    private final JLabel jatekosErtek = new JLabel();
+    private final JLabel osztoErtek = new JLabel();
+    private final JLabel jatekosOsztottErtek = new JLabel();
+    private final JLabel jatekVege = new JLabel();
+    private final JLabel penzCimke = new JLabel();
+    private final JLabel fogadasCimke = new JLabel();
 
     /**
      * Konstruktor, amely inicializálja a játék felhasználói felületét.
@@ -60,12 +60,12 @@ public class GameUI extends JFrame {
      * @param list Az ActionListener, amely kezeli a gombnyomásokat
      */
     public GameUI(ActionListener list) {
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.setBackground(new Color(0, 128, 0));
-        layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(1000, 800));
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.setBackground(new Color(0, 128, 0));
+        layeredPanel = new JLayeredPane();
+        layeredPanel.setPreferredSize(new Dimension(1000, 800));
         
-        layeredPane.setBorder(BorderFactory.createTitledBorder(
+        layeredPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),
             "Gametable",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -73,51 +73,51 @@ public class GameUI extends JFrame {
             new Font(FONT, Font.BOLD, 18)
         ));
 
-        layeredPane.setBackground(new Color(0, 128, 0));
+        layeredPanel.setBackground(new Color(0, 128, 0));
 
-        hitButton.addActionListener(list);
-        hitButton.setActionCommand("hit");
-        hitButton.setFont(new Font(FONT, Font.BOLD, 14));
-        hitButton.setEnabled(false);
-        hitButton.setBackground(Color.RED);
-        hitButton.setForeground(Color.BLACK);
+        hit.addActionListener(list);
+        hit.setActionCommand("hit");
+        hit.setFont(new Font(FONT, Font.BOLD, 14));
+        hit.setEnabled(false);
+        hit.setBackground(Color.RED);
+        hit.setForeground(Color.BLACK);
 
-        stayButton.addActionListener(list);
-        stayButton.setActionCommand("stay");
-        stayButton.setFont(new Font(FONT, Font.BOLD, 14));
-        stayButton.setEnabled(false);
-        stayButton.setBackground(Color.RED);
-        stayButton.setForeground(Color.BLACK);
+        stay.addActionListener(list);
+        stay.setActionCommand("stay");
+        stay.setFont(new Font(FONT, Font.BOLD, 14));
+        stay.setEnabled(false);
+        stay.setBackground(Color.RED);
+        stay.setForeground(Color.BLACK);
 
-        dealButton.addActionListener(list);
-        dealButton.setActionCommand("deal");
-        dealButton.setFont(new Font(FONT, Font.BOLD, 14));
-        dealButton.setBackground(Color.RED);
-        dealButton.setForeground(Color.BLACK);
+        deal.addActionListener(list);
+        deal.setActionCommand("deal");
+        deal.setFont(new Font(FONT, Font.BOLD, 14));
+        deal.setBackground(Color.RED);
+        deal.setForeground(Color.BLACK);
 
-        doubleButton.addActionListener(list);
-        doubleButton.setActionCommand("double");
-        doubleButton.setFont(new Font(FONT, Font.BOLD, 14));
-        doubleButton.setEnabled(false);
-        doubleButton.setBackground(Color.RED);
-        doubleButton.setForeground(Color.BLACK);
+        doubleB.addActionListener(list);
+        doubleB.setActionCommand("double");
+        doubleB.setFont(new Font(FONT, Font.BOLD, 14));
+        doubleB.setEnabled(false);
+        doubleB.setBackground(Color.RED);
+        doubleB.setForeground(Color.BLACK);
 
-        splitButton.addActionListener(list);
-        splitButton.setActionCommand(SPLIT);
-        splitButton.setEnabled(false);
-        splitButton.setBackground(Color.RED);
-        splitButton.setForeground(Color.BLACK);
+        splitB.addActionListener(list);
+        splitB.setActionCommand(SPLIT);
+        splitB.setEnabled(false);
+        splitB.setBackground(Color.RED);
+        splitB.setForeground(Color.BLACK);
 
-        buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(0, 128, 0));
-        controls.setPreferredSize(new Dimension(100, 100));
-        controls.setBackground(new Color(0, 128, 0));
-        buttonPanel.add(hitButton);
-        buttonPanel.add(stayButton);
-        buttonPanel.add(doubleButton);
-        buttonPanel.add(splitButton);
+        buttonP = new JPanel();
+        buttonP.setBackground(new Color(0, 128, 0));
+        kiosztas.setPreferredSize(new Dimension(100, 100));
+        kiosztas.setBackground(new Color(0, 128, 0));
+        buttonP.add(hit);
+        buttonP.add(stay);
+        buttonP.add(doubleB);
+        buttonP.add(splitB);
         
-        buttonPanel.setBorder(BorderFactory.createTitledBorder(
+        buttonP.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),
             "Actions",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -125,17 +125,17 @@ public class GameUI extends JFrame {
             new Font(FONT, Font.BOLD, 18)
         ));
 
-        betslider.setMajorTickSpacing(50);
-        betslider.setMinorTickSpacing(25);
-        betslider.setPaintTicks(true);
-        betslider.setPaintLabels(true);
-        betslider.setSnapToTicks(true);
-        betslider.setMinimum(50);
-        betslider.setMaximum(500);
-        betslider.setValue(50);
-        bets.setLayout(new GridLayout(2, 0));
+        csuszka.setMajorTickSpacing(50);
+        csuszka.setMinorTickSpacing(25);
+        csuszka.setPaintTicks(true);
+        csuszka.setPaintLabels(true);
+        csuszka.setSnapToTicks(true);
+        csuszka.setMinimum(50);
+        csuszka.setMaximum(500);
+        csuszka.setValue(50);
+        fogadasPanel.setLayout(new GridLayout(2, 0));
         
-        bets.setBorder(BorderFactory.createTitledBorder(
+        fogadasPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.BLACK),
             "Bets",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -143,53 +143,53 @@ public class GameUI extends JFrame {
             new Font(FONT, Font.BOLD, 18)
         ));
 
-        bets.setBackground(new Color(0, 128, 0));
-        bets.add(betslider);
-        bets.add(dealButton);
+        fogadasPanel.setBackground(new Color(0, 128, 0));
+        fogadasPanel.add(csuszka);
+        fogadasPanel.add(deal);
 
-        dealerAmount.setBounds(45, 175, 150, 50);
-        dealerAmount.setForeground(Color.BLACK);
-        dealerAmount.setFont(new Font(FONT, Font.BOLD, 18));
-        layeredPane.add(dealerAmount);
-        playerAmount.setBounds(45, 595, 150, 25);
-        playerAmount.setForeground(Color.BLACK);
-        playerAmount.setFont(new Font(FONT, Font.BOLD, 18));
-        layeredPane.add(playerAmount);
-        splitAmount.setBounds(480, 580, 150, 50);
-        splitAmount.setFont(new Font(FONT, Font.BOLD, 18));
-        splitAmount.setForeground(Color.BLACK);
-        layeredPane.add(splitAmount);
+        osztoErtek.setBounds(45, 175, 150, 50);
+        osztoErtek.setForeground(Color.BLACK);
+        osztoErtek.setFont(new Font(FONT, Font.BOLD, 18));
+        layeredPanel.add(osztoErtek);
+        jatekosErtek.setBounds(45, 595, 150, 25);
+        jatekosErtek.setForeground(Color.BLACK);
+        jatekosErtek.setFont(new Font(FONT, Font.BOLD, 18));
+        layeredPanel.add(jatekosErtek);
+        jatekosOsztottErtek.setBounds(480, 580, 150, 50);
+        jatekosOsztottErtek.setFont(new Font(FONT, Font.BOLD, 18));
+        jatekosOsztottErtek.setForeground(Color.BLACK);
+        layeredPanel.add(jatekosOsztottErtek);
 
-        moneyLabel.setBounds(660, 30, 200, 40);
-        moneyLabel.setForeground(Color.BLACK);
-        layeredPane.add(moneyLabel);
+        penzCimke.setBounds(660, 30, 200, 40);
+        penzCimke.setForeground(Color.BLACK);
+        layeredPanel.add(penzCimke);
 
-        betLabel.setBounds(660, 60, 250, 40);
-        betLabel.setForeground(Color.BLACK);
-        layeredPane.add(betLabel);
+        fogadasCimke.setBounds(660, 60, 250, 40);
+        fogadasCimke.setForeground(Color.BLACK);
+        layeredPanel.add(fogadasCimke);
 
-        buttonPanel.setLayout(new GridLayout(2, 2, 20, 20));
+        buttonP.setLayout(new GridLayout(2, 2, 20, 20));
 
-        controls.setLayout(new GridLayout(0, 2));
-        controls.add(buttonPanel);
-        controls.add(bets);
+        kiosztas.setLayout(new GridLayout(0, 2));
+        kiosztas.add(buttonP);
+        kiosztas.add(fogadasPanel);
 
-        panel.add(Box.createRigidArea(new Dimension(0, 20)));
-        panel.add(layeredPane);
-        panel.add(Box.createRigidArea(new Dimension(0, 20)));
-        panel.add(controls);
+        p.add(Box.createRigidArea(new Dimension(0, 20)));
+        p.add(layeredPanel);
+        p.add(Box.createRigidArea(new Dimension(0, 20)));
+        p.add(kiosztas);
 
-        gameOver.setBounds(200, 300, 600, 150);
-        gameOver.setBorder(BorderFactory.createTitledBorder("Game Over:"));
-        gameOver.setFont(new Font(gameOver.getFont().getFontName(), gameOver.getFont().getStyle(), 50));
-        gameOver.setForeground(Color.BLACK);
-        gameOver.setVisible(false);
-        layeredPane.add(gameOver);
+        jatekVege.setBounds(200, 300, 600, 150);
+        jatekVege.setBorder(BorderFactory.createTitledBorder("Game Over: "));
+        jatekVege.setFont(new Font(jatekVege.getFont().getFontName(), jatekVege.getFont().getStyle(), 50));
+        jatekVege.setForeground(Color.BLACK);
+        jatekVege.setVisible(false);
+        layeredPanel.add(jatekVege);
 
-        this.add(panel);
-        this.setTitle("BlackJack");
+        this.add(p);
+        this.setTitle("BJ");
         this.setSize(1000, 800);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -197,46 +197,46 @@ public class GameUI extends JFrame {
     /**
      * Kártya kirajzolása a megadott célhelyre.
      *
-     * @param c A kirajzolandó kártya
-     * @param dest A célhely (dealer, player, split)
+     * @param k A kirajzolandó kártya
+     * @param felhasznalo A célhely (dealer, player, split)
      */
-    public void drawCard(Card c, String dest) {
-        ImageIcon card;
-        JLabel cardLabel;
-        switch (dest) {
+    public void kartyaHuzasUI(Card k, String felhasznalo) {
+        ImageIcon kartya;
+        JLabel kartyaCimke;
+        switch (felhasznalo) {
             case DEALER -> {
-                if (dealerHand.size() != 1) {
-                    card = new ImageIcon(c.getImage());
-                    card = new ImageIcon(card.getImage().getScaledInstance(
-                        (int) (card.getIconWidth() * 0.2), (int) (card.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
+                if (osztoKez.size() != 1) {
+                    kartya = new ImageIcon(k.getKep());
+                    kartya = new ImageIcon(kartya.getImage().getScaledInstance(
+                        (int) (kartya.getIconWidth() * 0.2), (int) (kartya.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
                 } else {
-                    hidden = c;
-                    card = new ImageIcon("build/cards/b1fv.png");
-                    card = new ImageIcon(card.getImage().getScaledInstance(
-                        (int) (card.getIconWidth() * 1.52), (int) (card.getIconHeight() * 1.52), java.awt.Image.SCALE_SMOOTH));
+                    rejtettKartya = k;
+                    kartya = new ImageIcon("build/kartyas/b1fv.png");
+                    kartya = new ImageIcon(kartya.getImage().getScaledInstance(
+                        (int) (kartya.getIconWidth() * 1.52), (int) (kartya.getIconHeight() * 1.52), java.awt.Image.SCALE_SMOOTH));
                 }
-                cardLabel = new JLabel(card);
-                cardLabel.setBounds(20 + 37 * dealerHand.size(), 40, card.getIconWidth(), card.getIconHeight());
-                dealerHand.add(cardLabel);
-                layeredPane.add(cardLabel, Integer.valueOf(dealerHand.size()));
+                kartyaCimke = new JLabel(kartya);
+                kartyaCimke.setBounds(20 + 37 * osztoKez.size(), 40, kartya.getIconWidth(), kartya.getIconHeight());
+                osztoKez.add(kartyaCimke);
+                layeredPanel.add(kartyaCimke, Integer.valueOf(osztoKez.size()));
             }
             case PLAYER -> {
-                card = new ImageIcon(c.getImage());
-                card = new ImageIcon(card.getImage().getScaledInstance(
-                    (int) (card.getIconWidth() * 0.2), (int) (card.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
-                cardLabel = new JLabel(card);
-                cardLabel.setBounds(20 + 37 * playerHand.size(), 450, card.getIconWidth(), card.getIconHeight());
-                layeredPane.add(cardLabel, Integer.valueOf(playerHand.size()));
-                playerHand.add(cardLabel);
+                kartya = new ImageIcon(k.getKep());
+                kartya = new ImageIcon(kartya.getImage().getScaledInstance(
+                    (int) (kartya.getIconWidth() * 0.2), (int) (kartya.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
+                kartyaCimke = new JLabel(kartya);
+                kartyaCimke.setBounds(20 + 37 * jatekosKez.size(), 450, kartya.getIconWidth(), kartya.getIconHeight());
+                layeredPanel.add(kartyaCimke, Integer.valueOf(jatekosKez.size()));
+                jatekosKez.add(kartyaCimke);
             }
             case SPLIT -> {
-                card = new ImageIcon(c.getImage());
-                card = new ImageIcon(card.getImage().getScaledInstance(
-                    (int) (card.getIconWidth() * 0.2), (int) (card.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
-                cardLabel = new JLabel(card);
-                cardLabel.setBounds(460 + 37 * splitHand.size(), 450, card.getIconWidth(), card.getIconHeight());
-                layeredPane.add(cardLabel, Integer.valueOf(splitHand.size()));
-                splitHand.add(cardLabel);
+                kartya = new ImageIcon(k.getKep());
+                kartya = new ImageIcon(kartya.getImage().getScaledInstance(
+                    (int) (kartya.getIconWidth() * 0.2), (int) (kartya.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
+                kartyaCimke = new JLabel(kartya);
+                kartyaCimke.setBounds(460 + 37 * osztottKez.size(), 450, kartya.getIconWidth(), kartya.getIconHeight());
+                layeredPanel.add(kartyaCimke, Integer.valueOf(osztottKez.size()));
+                osztottKez.add(kartyaCimke);
             }
             default -> {
                 //
@@ -247,111 +247,114 @@ public class GameUI extends JFrame {
     /**
      * Gombok engedélyezése vagy letiltása a megadott parancs alapján.
      *
-     * @param command A parancs, amely alapján a gombokat engedélyezni vagy letiltani kell
+     * @param parancs A parancs, amely alapján a gombokat engedélyezni vagy letiltani kell
      */
-    public void setEnableButton(String command) {
-        switch (command) {
+    public void gombokatEngedelyez(String parancs) {
+        switch (parancs) {
             case "deal" -> {
-                GameUI.betslider.setEnabled(false);
-                GameUI.dealButton.setEnabled(false);
-                GameUI.stayButton.setEnabled(true);
-                GameUI.hitButton.setEnabled(true);
-                GameUI.doubleButton.setEnabled(true);
+                GameUI.csuszka.setEnabled(false);
+                GameUI.deal.setEnabled(false);
+                GameUI.stay.setEnabled(true);
+                GameUI.hit.setEnabled(true);
+                GameUI.doubleB.setEnabled(true);
             }
             case "stay" -> {
-                GameUI.splitButton.setEnabled(false);
-                GameUI.hitButton.setEnabled(false);
-                GameUI.stayButton.setEnabled(false);
-                GameUI.dealButton.setEnabled(true);
-                GameUI.betslider.setEnabled(true);
-                GameUI.doubleButton.setEnabled(false);
+                GameUI.splitB.setEnabled(false);
+                GameUI.hit.setEnabled(false);
+                GameUI.stay.setEnabled(false);
+                GameUI.deal.setEnabled(true);
+                GameUI.csuszka.setEnabled(true);
+                GameUI.doubleB.setEnabled(false);
             }
             case SPLIT -> {
-                GameUI.splitButton.setEnabled(false);
-                GameUI.doubleButton.setEnabled(false);
+                GameUI.splitB.setEnabled(false);
+                GameUI.doubleB.setEnabled(false);
             }
             case "bust" -> {
-                GameUI.hitButton.setEnabled(false);
-                GameUI.stayButton.setEnabled(false);
-                GameUI.dealButton.setEnabled(true);
-                GameUI.betslider.setEnabled(true);
+                GameUI.hit.setEnabled(false);
+                GameUI.stay.setEnabled(false);
+                GameUI.deal.setEnabled(true);
+                GameUI.csuszka.setEnabled(true);
             }
             case "hit" -> {
-                GameUI.doubleButton.setEnabled(false);
-                GameUI.splitButton.setEnabled(false);
+                GameUI.doubleB.setEnabled(false);
+                GameUI.splitB.setEnabled(false);
             }
             case "double" -> {
-                GameUI.hitButton.setEnabled(false);
-                GameUI.stayButton.setEnabled(false);
-                GameUI.doubleButton.setEnabled(false);
+                GameUI.hit.setEnabled(false);
+                GameUI.stay.setEnabled(false);
+                GameUI.doubleB.setEnabled(false);
             }
-            default -> throw new IllegalArgumentException("Invalid command: " + command);
+            default -> throw new IllegalArgumentException("Invalid parancs: " + parancs);
         }
     }
 
     /**
      * Frissíti a kéz értékét a felhasználói felületen.
      *
-     * @param owner A kéz tulajdonosa
-     * @param value A kéz értéke
+     * @param tulaj A kéz tulajdonosa
+     * @param ertek A kéz értéke
      */
-    public void updateHandValue(String owner, String value) {
-        switch (owner) {
-            case DEALER -> dealerAmount.setText(value);
-            case PLAYER -> playerAmount.setText(value);
-            case SPLIT -> splitAmount.setText(value);
-            default -> throw new IllegalArgumentException("Invalid owner: " + owner);
+    public void updateKezErtek(String tulaj, String ertek) {
+        switch (tulaj) {
+            case DEALER -> osztoErtek.setText(ertek);
+            case PLAYER -> jatekosErtek.setText(ertek);
+            case SPLIT -> jatekosOsztottErtek.setText(ertek);
+            default -> throw new IllegalArgumentException("Invalid tulaj: " + tulaj);
         }
     }
 
     /**
      * Törli a kártyákat a felhasználói felületről.
      */
-    public void clear() {
-        for (JLabel jLabel : dealerHand) {
-            layeredPane.remove(jLabel);
+    /**
+     * Törli az összes kártyát a felhasználói felületről.
+     */
+    public void torol() {
+        for (JLabel jLabel : osztoKez) {
+            layeredPanel.remove(jLabel);
         }
-        for (JLabel jLabel : playerHand) {
-            layeredPane.remove(jLabel);
+        for (JLabel jLabel : jatekosKez) {
+            layeredPanel.remove(jLabel);
         }
-        for (JLabel jLabel : splitHand) {
-            layeredPane.remove(jLabel);
+        for (JLabel jLabel : osztottKez) {
+            layeredPanel.remove(jLabel);
         }
-        dealerHand = new ArrayList<>();
-        playerHand = new ArrayList<>();
-        splitHand = new ArrayList<>();
-        dealerAmount.setText("");
-        splitAmount.setText("");
-        gameOver.setVisible(false);
+        osztoKez.clear();
+        jatekosKez.clear();
+        osztottKez.clear();
+        osztoErtek.setText("");
+        jatekosOsztottErtek.setText("");
+        jatekVege.setVisible(false);
         this.repaint();
     }
-
+    
     /**
      * Törli a játékos kártyáit a felhasználói felületről.
      */
-    public void clearPlayer() {
-        for (JLabel jLabel : playerHand) {
-            layeredPane.remove(jLabel);
+    public void torolJatekos() {
+        for (JLabel jLabel : jatekosKez) {
+            layeredPanel.remove(jLabel);
         }
-        playerHand = new ArrayList<>();
+        jatekosKez.clear();
         this.repaint();
     }
 
     /**
      * Letiltja a kéz kártyáit a felhasználói felületen.
      *
-     * @param owner A kéz tulajdonosa
+     * @param tulaj A kéz tulajdonosa
      */
-    public void disableHand(String owner) {
-        switch (owner) {
+    public void kezTiltas(String tulaj) {
+        switch (tulaj) {
             case PLAYER -> {
-                for (JLabel jLabel : playerHand) {
+                for (JLabel jLabel : jatekosKez) {
                     jLabel.setEnabled(false);
                 }
                 this.repaint();
             }
             case SPLIT -> {
-                for (JLabel jLabel : splitHand) {
+                for (JLabel jLabel : osztottKez) {
                     jLabel.setEnabled(false);
                 }
                 this.repaint();
@@ -365,18 +368,18 @@ public class GameUI extends JFrame {
     /**
      * Engedélyezi a kéz kártyáit a felhasználói felületen.
      *
-     * @param owner A kéz tulajdonosa
+     * @param tulaj A kéz tulajdonosa
      */
-    public void enableHand(String owner) {
-        switch (owner) {
+    public void kezEngedelyez(String tulaj) {
+        switch (tulaj) {
             case PLAYER -> {
-                for (JLabel jLabel : playerHand) {
+                for (JLabel jLabel : jatekosKez) {
                     jLabel.setEnabled(true);
                 }
                 this.repaint();
             }
             case SPLIT -> {
-                for (JLabel jLabel : splitHand) {
+                for (JLabel jLabel : osztottKez) {
                     jLabel.setEnabled(true);
                 }
                 this.repaint();
@@ -390,19 +393,18 @@ public class GameUI extends JFrame {
     /**
      * Felfedi az osztó rejtett kártyáját.
      */
-    public void revealDealerCard() {
-        if (dealerHand.isEmpty()) {
-            return;
+    public void felfedRejtettKartya() {
+        if (!osztoKez.isEmpty()) {
+            layeredPanel.remove(osztoKez.get(1));
+            osztoKez.remove(1);
+            ImageIcon kartya = new ImageIcon(rejtettKartya.getKep());
+            kartya = new ImageIcon(kartya.getImage().getScaledInstance(
+                (int) (kartya.getIconWidth() * 0.2), (int) (kartya.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
+            JLabel kartyaCimke = new JLabel(kartya);
+            kartyaCimke.setBounds(20 + 37, 40, kartya.getIconWidth(), kartya.getIconHeight());
+            osztoKez.add(1, kartyaCimke);
+            layeredPanel.add(kartyaCimke, Integer.valueOf(2));
         }
-        layeredPane.remove(dealerHand.get(1));
-        dealerHand.remove(1);
-        ImageIcon card = new ImageIcon(hidden.getImage());
-        card = new ImageIcon(card.getImage().getScaledInstance(
-            (int) (card.getIconWidth() * 0.2), (int) (card.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
-        JLabel cardLabel = new JLabel(card);
-        cardLabel.setBounds(20 + 37, 40, card.getIconWidth(), card.getIconHeight());
-        dealerHand.add(1, cardLabel);
-        layeredPane.add(cardLabel, Integer.valueOf(2));
     }
 
     /**
@@ -410,21 +412,21 @@ public class GameUI extends JFrame {
      *
      * @param text A megjelenítendő üzenet
      */
-    public void gameOver(String text) {
-        gameOver.setText(text);
-        gameOver.setVisible(true);
+    public void vege(String text) {
+        jatekVege.setText(text);
+        jatekVege.setVisible(true);
     }
 
     /**
      * Frissíti a fogadások és a játékos vagyonának értékét a felhasználói felületen.
      *
-     * @param wealthAmount A játékos aktuális vagyona
-     * @param betAmount A játékos aktuális tétje
+     * @param vagyon A játékos aktuális vagyona
+     * @param fogadas A játékos aktuális tétje
      */
-    public void updateBets(int wealthAmount, int betAmount) {
-        moneyLabel.setText(GameUI.WEALTH + wealthAmount + "€");
-        moneyLabel.setFont(new Font(FONT, Font.BOLD, 20));
-        betLabel.setText(BET + betAmount + "€");
-        betLabel.setFont(new Font(FONT, Font.BOLD, 20));
+    public void tetFrissites(int vagyon, int fogadas) {
+        penzCimke.setText(GameUI.WEALTH + vagyon + "€");
+        penzCimke.setFont(new Font(FONT, Font.BOLD, 20));
+        fogadasCimke.setText(BET + fogadas + "€");
+        fogadasCimke.setFont(new Font(FONT, Font.BOLD, 20));
     }
 }

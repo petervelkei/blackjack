@@ -27,7 +27,7 @@ class HandTest {
     void testAddCard() {
         Card card = new Card(Rank.ACE, Suit.CLUBS, null);
         hand.addCard(card);
-        assertEquals(1, hand.getSize());
+        assertEquals(1, hand.getKartyakMeret());
     }
 
     /**
@@ -38,7 +38,7 @@ class HandTest {
     void testGetValue() {
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS, null));
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
-        assertEquals(11, hand.getValue());
+        assertEquals(11, hand.getErtek());
     }
 
     /**
@@ -49,7 +49,7 @@ class HandTest {
     void testGetAcedValue() {
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS, null));
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
-        assertEquals(21, hand.getAcedValue());
+        assertEquals(21, hand.getaszErtek());
     }
 
     /**
@@ -71,7 +71,7 @@ class HandTest {
     void testIsSplittable() {
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
-        assertTrue(hand.isSplittable());
+        assertTrue(hand.splittelheto());
     }
 
     /**
@@ -84,8 +84,8 @@ class HandTest {
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
         Hand splitHand = hand.split();
         assertNotNull(splitHand);
-        assertEquals(1, hand.getSize());
-        assertEquals(1, splitHand.getSize());
+        assertEquals(1, hand.getKartyakMeret());
+        assertEquals(1, splitHand.getKartyakMeret());
     }
 
     /**
@@ -94,8 +94,8 @@ class HandTest {
      */
     @Test
     void testAddBet() {
-        hand.addBet(100);
-        assertEquals(100, hand.getBet());
+        hand.placeBet(100);
+        assertEquals(100, hand.getFogadas());
     }
 
     /**
@@ -104,7 +104,7 @@ class HandTest {
      */
     @Test
     void testGetOwner() {
-        assertEquals("player", hand.getOwner());
+        assertEquals("player", hand.getFelhasznalo());
     }
 
     /**
@@ -114,7 +114,7 @@ class HandTest {
     @Test
     void testHasAce() {
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS, null));
-        assertTrue(hand.hasAce());
+        assertTrue(hand.VanAsza());
     }
 
     /**
@@ -125,7 +125,7 @@ class HandTest {
     void testGetCard() {
         Card card = new Card(Rank.ACE, Suit.CLUBS, null);
         hand.addCard(card);
-        assertEquals(card, hand.getCard(0));
+        assertEquals(card, hand.getKartya(0));
     }
 
     /**
@@ -133,10 +133,10 @@ class HandTest {
      * Ellenőrzi, hogy két kártya hozzáadása után a kéz mérete 2.
      */
     @Test
-    void testGetSize() {
+    void testgetKartyakMeret() {
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS, null));
         hand.addCard(new Card(Rank.KING, Suit.CLUBS, null));
-        assertEquals(2, hand.getSize());
+        assertEquals(2, hand.getKartyakMeret());
     }
 
     /**
@@ -144,8 +144,8 @@ class HandTest {
      * Ellenőrzi, hogy a tét hozzáadása után a kéz tétje 50.
      */
     @Test
-    void testGetBet() {
-        hand.addBet(50);
-        assertEquals(50, hand.getBet());
+    void testgetFogadas() {
+        hand.placeBet(50);
+        assertEquals(50, hand.getFogadas());
     }
 }

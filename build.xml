@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="BlackJackPlayground" default="run" basedir=".">
-    <description>Builds, tests, and runs the project BlackJackPlayground.</description>
+    <description>Builds, tests, and runs the project BlackJack</description>
 
     <!-- Define properties -->
     <property name="src.dir" value="src/main/java"/>

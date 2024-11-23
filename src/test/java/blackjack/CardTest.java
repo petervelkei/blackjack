@@ -40,7 +40,7 @@ class CardTest {
     void testGetImage() {
         Image image = new ImageIcon("src/cards/ace_of_clubs.png").getImage();
         Card card = new Card(Rank.ACE, Suit.CLUBS, image);
-        assertEquals(image, card.getImage());
+        assertEquals(image, card.getKep());
     }
 
     /**
@@ -83,7 +83,7 @@ class CardTest {
     void testCardWithImage() {
         Image image = new ImageIcon("src/cards/ace_of_clubs.png").getImage();
         Card card = new Card(Rank.ACE, Suit.CLUBS, image);
-        assertNotNull(card.getImage());
+        assertNotNull(card.getKep());
     }
 
     /**
@@ -93,7 +93,7 @@ class CardTest {
     @Test
     void testCardWithoutImage() {
         Card card = new Card(Rank.ACE, Suit.CLUBS, null);
-        assertNull(card.getImage());
+        assertNull(card.getKep());
     }
 
     /**

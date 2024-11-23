@@ -1,8 +1,8 @@
 package blackjack;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
 	private Dealer dealer;
@@ -10,12 +10,13 @@ class DealerTest {
 	@BeforeEach
 	void setUp() {
 		dealer = new Dealer();
+		dealer.play();
 	}
 
 	@Test
 	void testDeal() {
 		dealer.deal();
-		assertEquals(2, dealer.getHand().getSize());
+		assertEquals(2, dealer.getHand().getKartyakMeret());
 	}
 
 
@@ -23,7 +24,7 @@ class DealerTest {
 	void testHit() {
 		dealer.deal();
 		dealer.hit();
-		assertEquals(3, dealer.getHand().getSize());
+		assertEquals(3, dealer.getHand().getKartyakMeret());
 	}
 
 	@Test

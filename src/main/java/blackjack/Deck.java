@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -14,53 +16,58 @@ import javax.imageio.ImageIO;
  */
 public class Deck {
 
-    private ArrayList<Card> cardStorage = new ArrayList<>();
-    private ArrayList<Card> shuffledDeck = new ArrayList<>();
+    private List<Card> cards = new LinkedList<>();
+    private List<Card> shuffle = new LinkedList<>();
     
     /**
      * 
      * Létrehoz egy új Deck objektumot, amely tárolja az 52 különböző kártyát sorrendben.
      */
     public Deck() {
-        for (Rank r : Rank.values()) {
-            for (Suit s : Suit.values()) {
-                try {
-                    String fileName = "src/resources/cards/" + r.name().toLowerCase() + "_of_" + s.name().toLowerCase() + ".png";
-                    File file = new File(fileName);
-                    if (!file.exists()) {
-                        throw new IOException("File not found: " + fileName);
-                    }
-                    Image temp = ImageIO.read(file);
-                    cardStorage.add(new Card(r, s, temp));
-                } catch (IOException ex) {
-                    System.out.println("You seem to miss the card files: " + ex.getMessage());
-                    System.exit(154);
+        Rank[] ranks = Rank.values();
+        Suit[] suits = Suit.values();
+        List<String> cardNames = new LinkedList<>();
+    
+        // Összegyűjtjük az összes kártya nevét
+        for (Rank rank : ranks) {
+            for (Suit suit : suits) {
+                cardNames.add(rank.name().toLowerCase() + "_of_" + suit.name().toLowerCase() + ".png");
+            }
+        }
+    
+        // Betöltjük a képeket és létrehozzuk a kártya objektumokat
+        for (String cardName : cardNames) {
+            try {
+                String fileName = "src/resources/cards/" + cardName;
+                File file = new File(fileName);
+                if (!file.exists()) {
+                    throw new IOException("File not found: " + fileName);
                 }
+                Image t = ImageIO.read(file);
+                String[] parts = cardName.split("_of_");
+                Rank rank = Rank.valueOf(parts[0].toUpperCase());
+                Suit suit = Suit.valueOf(parts[1].replace(".png", "").toUpperCase());
+                cards.add(new Card(rank, suit, t));
+            } catch (IOException e) {
+                System.err.println("Missed files: " + e.getMessage());
+                System.exit(154);
             }
         }
     }
 
     /**
      * 
-     * A kártyatárolót használja egy új, 52 kártyából álló pakli megkeveréséhez.
-     */
-    public void shuffle() {
-        shuffledDeck = new ArrayList<>(cardStorage);
-        Collections.shuffle(shuffledDeck);
-    }
-
-    /**
-     * 
      * Visszaadja a pakli első kártyáját.
      * Ha a pakli üres (minden kártyát kihúztak vagy a Deck objektumot éppen most hozták létre),
-     * a shuffle() metódust használja a feltöltéshez.
+     * a újra feltöltjük.
      * 
-     * @return first Card of the deck
      */
-    public Card drawCard() {
-        if (shuffledDeck.isEmpty()) {
-            shuffle();
+    public Card draw() {
+        if (!shuffle.isEmpty()) {
+            return shuffle.remove(0);
         }
-        return shuffledDeck.remove(0);
+        shuffle = new ArrayList<>(cards);
+        Collections.shuffle(shuffle);
+        return shuffle.remove(0);
     }
 }
