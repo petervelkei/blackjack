@@ -10,27 +10,20 @@ class DealerTest {
 	@BeforeEach
 	void setUp() {
 		dealer = new Dealer();
-		dealer.play();
+		dealer.jatekIndit();
 	}
 
 	@Test
-	void testDeal() {
-		dealer.deal();
-		assertEquals(2, dealer.getHand().getKartyakMeret());
+	void testOsztas() {
+		dealer.osztas();
+		assertEquals(2, dealer.getJatekosKez().getKartyakMeret());
 	}
-
-
+	
 	@Test
-	void testHit() {
-		dealer.deal();
-		dealer.hit();
-		assertEquals(3, dealer.getHand().getKartyakMeret());
+	void testHuzas() {
+		dealer.osztas();
+		dealer.huzas();
+		assertEquals(3, dealer.getJatekosKez().getKartyakMeret());
 	}
 
-	@Test
-	void testSurrender() {
-		dealer.deal();
-		dealer.surrender();
-		assertEquals(1975, dealer.getBalance());
-	}
 }

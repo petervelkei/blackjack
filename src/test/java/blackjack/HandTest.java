@@ -114,7 +114,7 @@ class HandTest {
     @Test
     void testHasAce() {
         hand.addCard(new Card(Rank.ACE, Suit.CLUBS, null));
-        assertTrue(hand.VanAsza());
+        assertTrue(hand.vanAsz());
     }
 
     /**

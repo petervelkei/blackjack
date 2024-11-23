@@ -6,9 +6,9 @@ import java.awt.Image;
  * Egy osztály, amely egy játékkártyát reprezentál ranggal, színnel és képpel.
  */
 public class Card {
-    private final Rank r; // A kártya rangja (pl. Ász, 2, 3, ..., Király)
-    private final Suit s; // A kártya színe (pl. Treff, Káró, Kőr, Pikk)
-    private final Image i; // A kártyát ábrázoló kép
+    private final Rank r;
+    private final Suit s;
+    private final Image i;
 
     /**
      * Létrehoz egy kártyát a megadott ranggal, színnel és képpel.

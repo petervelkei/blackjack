@@ -125,14 +125,14 @@ public class GameUI extends JFrame {
             new Font(FONT, Font.BOLD, 18)
         ));
 
-        csuszka.setMajorTickSpacing(50);
-        csuszka.setMinorTickSpacing(25);
+        csuszka.setMajorTickSpacing(100);
+        csuszka.setMinorTickSpacing(50);
         csuszka.setPaintTicks(true);
         csuszka.setPaintLabels(true);
         csuszka.setSnapToTicks(true);
-        csuszka.setMinimum(50);
-        csuszka.setMaximum(500);
-        csuszka.setValue(50);
+        csuszka.setMinimum(100);
+        csuszka.setMaximum(1000);
+        csuszka.setValue(0);
         fogadasPanel.setLayout(new GridLayout(2, 0));
         
         fogadasPanel.setBorder(BorderFactory.createTitledBorder(

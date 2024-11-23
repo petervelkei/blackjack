@@ -1,11 +1,9 @@
 package blackjack;
 
 /**
- * Felsoroló, amely a BlackJack-ben használt alapvető játékkártyák rangjait reprezentálja.
- * Tartalmazza a rangok nevét és értékét, amelyeket a BlackJack-ben használnak.
+ * játékban használt alapvető játékkártyák rangjait reprezentálja.
  */
 public enum Rank {
-
     ACE( 1),
     KING( 10),
     QUEEN( 10),

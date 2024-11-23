@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Ez az osztály egyetlen kezet reprezentál a blackjack játékban.
  * 
- * @autor Wampie
  */
 public class Hand {
     private final List<Card> kartyak = new LinkedList<>();
@@ -90,12 +89,12 @@ public class Hand {
     }
 
     /**
-     * Hozzáad egy adott összeget a kézre tett tét összegéhez. Ha kevesebb, mint 10, 10-et ad hozzá.
+     * Hozzáad egy adott összeget a kézre tett tét összegéhez. Ha kevesebb, mint 100, 100-at ad hozzá.
      * 
      * @param b A megadott tét
      */
     public void placeBet(int b) {
-        fogadas += Math.max(b, 10);
+        fogadas += Math.max(b, 100);
     }
 
     /**
@@ -131,7 +130,7 @@ public class Hand {
      * 
      * @return true, ha a kéz Ászt tartalmaz
      */
-    public boolean VanAsza() {
+    public boolean vanAsz() {
         return asz;
     }
 

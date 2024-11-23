@@ -19,7 +19,10 @@ public class CoinPurse implements ChangeListener {
      */
     public CoinPurse(int initialBalance) {
         this.balance = initialBalance > 0 ? initialBalance : 2000;
-        this.currentBet = 50;
+    }
+
+    public boolean helyesTet() {
+        return balance - currentBet >= 0;
     }
 
 
@@ -30,7 +33,7 @@ public class CoinPurse implements ChangeListener {
      * @return A fogadott összeg
      */
     public int bet() {
-        if (balance - currentBet >= 0) {
+        if (helyesTet()) {
             balance -= currentBet;
             return currentBet;
         }
@@ -57,37 +60,21 @@ public class CoinPurse implements ChangeListener {
             balance += amount;
         }
     }
-    
+
     /**
-     * Beállítja a CoinPurse jelenlegi vagyonát a megadott összegre.
-     * Ha kevesebb, mint 10, megtartja a jelenlegi összeget.
+     * Kivonja a megadott pénzösszeget a CoinPurse objektumból.
+     * Ha a megadott összeg nagyobb, mint a játékos egyenlege, nem von le semmit.
      *
-     * @param amount A beállítandó vagyon összege
+     * @param amount A kivonandó pénzösszeg
      */
-    public void updateBalance(int amount) {
-        if (amount >= 10) {
-            balance = amount;
-        }
-    }
-    
-    /**
-     * Beállítja a CoinPurse jelenlegi tétméretét a megadott összegre.
-     * Ha kevesebb, mint 10, megtartja a jelenlegi összeget.
-     *
-     * @param amount A beállítandó tétméret
-     */
-    private void updateBet(int amount) {
-        if (amount >= 10) {
-            currentBet = amount;
-        } else {
-            currentBet = 0;
-        }
+    private void updateBet(int m) {
+        currentBet = m >= 100 ? m : 0;
     }
 
     /**
-     * Kezeli a JSlider állapotváltozását, és beállítja a tétméretet a csúszka értékére.
+     * Visszaadja a játékos aktuális tétjét.
      *
-     * @param event Az állapotváltozás eseménye
+     * @return A játékos aktuális tétje
      */
     @Override
     public void stateChanged(ChangeEvent event) {
