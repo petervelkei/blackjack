@@ -145,7 +145,7 @@ class HandTest {
      */
     @Test
     void testgetFogadas() {
-        hand.placeBet(50);
-        assertEquals(50, hand.getFogadas());
+        hand.placeBet(100);
+        assertEquals(100, hand.getFogadas());
     }
 }

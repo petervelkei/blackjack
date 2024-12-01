@@ -13,14 +13,19 @@ public class CoinPurse implements ChangeListener {
 
     /**
      * Konstruktor, amely inicializálja a CoinPurse objektumot a megadott kezdő egyenleggel.
-     * Ha a kezdő egyenleg kisebb vagy egyenlő nullával, akkor az alapértelmezett egyenleg 2000 lesz.
      *
      * @param initialBalance A kezdő egyenleg
      */
     public CoinPurse(int initialBalance) {
-        this.balance = initialBalance > 0 ? initialBalance : 2000;
+        this.balance = initialBalance;
     }
 
+
+    /**
+     * Ellenőrzi, hogy a játékosnak van-e elég pénze a megadott tétre.
+     *
+     * @return true, ha a játékosnak van elég pénze a tétre
+     */
     public boolean helyesTet() {
         return balance - currentBet >= 0;
     }
@@ -62,16 +67,6 @@ public class CoinPurse implements ChangeListener {
     }
 
     /**
-     * Kivonja a megadott pénzösszeget a CoinPurse objektumból.
-     * Ha a megadott összeg nagyobb, mint a játékos egyenlege, nem von le semmit.
-     *
-     * @param amount A kivonandó pénzösszeg
-     */
-    private void updateBet(int m) {
-        currentBet = m >= 100 ? m : 0;
-    }
-
-    /**
      * Visszaadja a játékos aktuális tétjét.
      *
      * @return A játékos aktuális tétje
@@ -80,7 +75,7 @@ public class CoinPurse implements ChangeListener {
     public void stateChanged(ChangeEvent event) {
         JSlider slider = (JSlider) event.getSource();
         if (!slider.getValueIsAdjusting()) {
-            updateBet(slider.getValue());
+            currentBet = slider.getValue();
         }
     }
 }

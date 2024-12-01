@@ -211,7 +211,7 @@ public class GameUI extends JFrame {
                         (int) (kartya.getIconWidth() * 0.2), (int) (kartya.getIconHeight() * 0.2), java.awt.Image.SCALE_SMOOTH));
                 } else {
                     rejtettKartya = k;
-                    kartya = new ImageIcon("build/kartyas/b1fv.png");
+                    kartya = new ImageIcon("src/resources/cards/b1fv.png");
                     kartya = new ImageIcon(kartya.getImage().getScaledInstance(
                         (int) (kartya.getIconWidth() * 1.52), (int) (kartya.getIconHeight() * 1.52), java.awt.Image.SCALE_SMOOTH));
                 }

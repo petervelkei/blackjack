@@ -59,7 +59,7 @@ public class Deck {
      * 
      * Visszaadja a pakli első kártyáját.
      * Ha a pakli üres (minden kártyát kihúztak vagy a Deck objektumot éppen most hozták létre),
-     * a újra feltöltjük.
+     * újra feltöltjük.
      * 
      */
     public Card draw() {
