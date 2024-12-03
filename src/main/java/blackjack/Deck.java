@@ -43,11 +43,11 @@ public class Deck {
                 if (!file.exists()) {
                     throw new IOException("File not found: " + fileName);
                 }
-                Image t = ImageIO.read(file);
+                Image kep = ImageIO.read(file);
                 String[] parts = cardName.split("_of_");
                 Rank rank = Rank.valueOf(parts[0].toUpperCase());
                 Suit suit = Suit.valueOf(parts[1].replace(".png", "").toUpperCase());
-                cards.add(new Card(rank, suit, t));
+                cards.add(new Card(rank, suit, kep));
             } catch (IOException e) {
                 System.err.println("Missed files: " + e.getMessage());
                 System.exit(154);

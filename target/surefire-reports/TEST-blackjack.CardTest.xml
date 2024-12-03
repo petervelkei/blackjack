@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="blackjack.CardTest" time="0.189" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="blackjack.CardTest" time="0.241" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/petervelkei/Desktop/blackjack/target/surefire/surefirebooter14223490640620711508.jar /Users/petervelkei/Desktop/blackjack/target/surefire 2024-12-01T15-45-48_375-jvmRun1 surefire15385000891733520098tmp surefire_013280723202907807366tmp"/>
+    <property name="sun.java.command" value="/Users/petervelkei/Desktop/blackjack/target/surefire/surefirebooter16346545850398765541.jar /Users/petervelkei/Desktop/blackjack/target/surefire 2024-12-03T11-26-13_701-jvmRun1 surefire12678086078994451927tmp surefire_08738949855636203156tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/petervelkei/Desktop/blackjack/target/test-classes:/Users/petervelkei/Desktop/blackjack/target/classes:/Users/petervelkei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/Users/petervelkei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/Users/petervelkei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/petervelkei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/Users/petervelkei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/Users/petervelkei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:/Users/petervelkei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/petervelkei/Desktop/blackjack/target/surefire/surefirebooter14223490640620711508.jar"/>
+    <property name="surefire.real.class.path" value="/Users/petervelkei/Desktop/blackjack/target/surefire/surefirebooter16346545850398765541.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="22.0.2"/>
     <property name="user.name" value="petervelkei"/>
@@ -55,14 +55,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="java.class.version" value="66.0"/>
   </properties>
-  <testcase name="testCardInequality" classname="blackjack.CardTest" time="0.012"/>
-  <testcase name="testGetImage" classname="blackjack.CardTest" time="0.166"/>
-  <testcase name="testCardRankValue" classname="blackjack.CardTest" time="0.001"/>
-  <testcase name="testToString" classname="blackjack.CardTest" time="0"/>
-  <testcase name="testGetRank" classname="blackjack.CardTest" time="0.001"/>
+  <testcase name="testCardInequality" classname="blackjack.CardTest" time="0.011"/>
+  <testcase name="testGetImage" classname="blackjack.CardTest" time="0.211"/>
+  <testcase name="testCardRankValue" classname="blackjack.CardTest" time="0"/>
+  <testcase name="testToString" classname="blackjack.CardTest" time="0.001"/>
+  <testcase name="testGetRank" classname="blackjack.CardTest" time="0"/>
   <testcase name="testGetSuit" classname="blackjack.CardTest" time="0"/>
-  <testcase name="testCardWithImage" classname="blackjack.CardTest" time="0.002"/>
+  <testcase name="testCardWithImage" classname="blackjack.CardTest" time="0.001"/>
   <testcase name="testCardSuitValue" classname="blackjack.CardTest" time="0"/>
-  <testcase name="testCardWithoutImage" classname="blackjack.CardTest" time="0"/>
+  <testcase name="testCardWithoutImage" classname="blackjack.CardTest" time="0.001"/>
   <testcase name="testCardEquality" classname="blackjack.CardTest" time="0"/>
 </testsuite>
